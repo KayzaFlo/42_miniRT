@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/04 16:59:14 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/04 17:35:02 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ float rayMarch(t_vec3 ro, t_vec3 rd)
 void	rendering(mlx_image_t *img)
 {
 	// Ray Origin
-	t_vec3 ro = {0, 2, 5};
+	t_vec3 ro = {0, 0, 5};
 	for (int i = 0; i < WIDTH; i++)
 	{
 		for (int j = 0; j < HEIGHT; j++)
@@ -71,7 +71,7 @@ void	rendering(mlx_image_t *img)
 			// ecran a normaliser facon uv
 			t_vec3 ray_direction = {
 				i - WIDTH / 2,
-				j - WIDTH / 2,
+				j - HEIGHT / 2,
 				-1000};
 			ray_direction = v3_normalize(ray_direction);
 			// Distance hit
@@ -83,23 +83,17 @@ void	rendering(mlx_image_t *img)
 					ro.x + ray_direction.x * d,
 					ro.y + ray_direction.y * d,
 					ro.z + ray_direction.z * d };
-				t_vec3 lightPosition = {2, 2, 4};
+				t_vec3 lightPosition = {2, -2, 4}; //Y axis seems inverted ?
 				t_vec3 lightDirection = v3_normalize(lightPosition);
-				// t_vec3 lightDirection = {-2, 2, -4};
-				// lightDirection = v3_normalize(lightDirection);
-				// v3_print(lightDirection);
 				float dif = v3_dot(point, lightDirection);
-				// v3_print(point);
-				// v3_print(lightDirection);
 				if (dif < 0)
 					dif = 0;
 				else if (dif > 1)
 					dif = 1;
-				printf("%.4f\n", dif);
-				int color = ((int8_t)(255.0f * dif) << 24) +
-						((int8_t)(25.0f * dif) << 16) +
-						((int8_t)(155.0f * dif) << 8) +
-						(int8_t)255;
+				uint32_t color = ((uint8_t)(255.0f * dif) << 24) +
+						((uint8_t)(25.0f * dif) << 16) +
+						((uint8_t)(155.0f * dif) << 8) +
+						(uint8_t)255;
 				mlx_put_pixel(img, i, j, color);
 			}
 		}
