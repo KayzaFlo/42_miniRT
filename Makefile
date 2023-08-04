@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/06/20 12:20:49 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/04 16:07:00 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,8 @@ RM			:= rm -f
 CFLAGS		= -Wall -Wextra -Werror
 
 #####	SOURCES		############################################################
-SRC			=	src/main.c
+SRC			=	src/main.c \
+				src/vector3.c
 OBJ			=	$(SRC:.c=.o)
 
 #####	Makefile  objs		###################################################
@@ -36,11 +37,11 @@ CYAN 		:= \033[1;36m
 
 # ------ #
 
-all: $(LIBFT) $(MINIRT) $(CLIENT)
+all: $(LIBFT) $(MLX42) $(MINIRT) $(CLIENT)
 
 $(MINIRT): $(OBJ)
 	@ echo "$(GREEN)Compilation ${WHITE}of ${CYAN}$(MINIRT) ${WHITE}..."
-	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -ldl -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm
+	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 	@ echo "$(CYAN)$(MINIRT) $(GREEN)created$(WHITE) ✔️"
 
 # ------ #
