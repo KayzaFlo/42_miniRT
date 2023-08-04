@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
+#    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/06/20 12:20:49 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/04 16:47:49 by arivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,11 @@ RM			:= rm -f
 CFLAGS		= -Wall -Wextra -Werror
 
 #####	SOURCES		############################################################
-SRC			=	src/main.c
+SRC			=	src/main.c \
+				src/parsing/parsing.c \
+				src/parsing/parsing_error.c \
+				src/parsing/file_parsing.c \
+				src/parsing/parsing_utils.c
 OBJ			=	$(SRC:.c=.o)
 
 #####	Makefile  objs		###################################################
@@ -36,11 +40,11 @@ CYAN 		:= \033[1;36m
 
 # ------ #
 
-all: $(LIBFT) $(MINIRT) $(CLIENT)
+all: $(LIBFT) $(MLX42) $(MINIRT) $(CLIENT)
 
 $(MINIRT): $(OBJ)
 	@ echo "$(GREEN)Compilation ${WHITE}of ${CYAN}$(MINIRT) ${WHITE}..."
-	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -ldl -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/" -pthread -lm
+	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -ldl -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/" -pthread -lm
 	@ echo "$(CYAN)$(MINIRT) $(GREEN)created$(WHITE) ✔️"
 
 # ------ #

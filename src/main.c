@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/06/20 12:15:13 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/04 14:44:03 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 #include "../lib/MLX42/include/MLX42/MLX42.h"
+#include "../include/minirt.h"
 #define WIDTH 256
 #define HEIGHT 256
 
@@ -34,26 +36,41 @@ static void ft_hook(void* param)
 	printf("WIDTH: %d | HEIGHT: %d\n", mlx->width, mlx->height);
 }
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
     (void)argc;
     (void)argv;
 
     // MLX allows you to define its core behaviour before startup.
+	if (parsing(argc, argv))
+		exit (1);
 	mlx_set_setting(MLX_MAXIMIZED, true);
-	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "42Balls", true);
+	mlx_t* mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!mlx)
 		ft_error();
 
 	/* Do stuff */
-
+	
 	// Create and display the image.
-	mlx_image_t* img = mlx_new_image(mlx, 256, 256);
+	mlx_image_t* img = mlx_new_image(mlx, 1000, 1000);
+	memset(img->pixels, 255, img->width * img->height * sizeof(int32_t));
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		ft_error();
-
+	unsigned int	x = 0;
+	unsigned int	y = 0;
+	while (true)
+	{
+		if (y == img->height - 100)
+			break ;
+		mlx_put_pixel(img, x, y, 0x00FF00FF);
+		if (x == img->width - 100)
+		{
+			x = 0;
+			y++;
+		}
+		x++;
+	}
 	// Even after the image is being displayed, we can still modify the buffer.
-	mlx_put_pixel(img, 0, 0, 0xFF0000FF);
 
 	// Register a hook and pass mlx as an optional param.
 	// NOTE: Do this before calling mlx_loop!
