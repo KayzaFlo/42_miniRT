@@ -6,11 +6,20 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 15:48:50 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/04 16:05:47 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/07 11:07:06 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vector3.h"
+
+t_vec3	v3_new(float x, float y, float z)
+{
+	t_vec3 new;
+	new.x = x;
+	new.y = y;
+	new.z = z;
+	return (new);
+}
 
 float	v3_dot(t_vec3 v1, t_vec3 v2)
 {
