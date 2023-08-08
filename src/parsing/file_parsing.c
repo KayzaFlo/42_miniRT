@@ -5,95 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/04 14:53:41 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/04 16:57:57 by arivera          ###   ########.fr       */
+/*   Created: 2023/08/06 10:48:09 by arivera           #+#    #+#             */
+/*   Updated: 2023/08/08 12:27:10 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+# include "../../include/minirt.h"
 
-static void	init_parsing(t_parsing *parsing)
+static int	file_is_empty(char *file_path)
 {
-	parsing->amb_count = 0;
-	parsing->cam_count = 0;
-	parsing->light_count = 0;
-	parsing->line_index = 1;
+	ft_putstr_fd("Error\n", 2);
+	ft_putstr_fd(file_path, 2);
+	ft_putstr_fd(": File is empty\n", 2);
+	return (1);
 }
 
-static int	verify_split_line(char **line, t_parsing *parsing)
+static int	vacant_elements(t_parsing *p)
 {
-	int	i;
-	int	j;
+	int	err;
 
-	if (ft_strncmp("A", line[0], 2) && ft_strncmp("C", line[0], 2)
-		&& ft_strncmp("L", line[0], 2) && ft_strncmp("sp", line[0], 3)
-		&& ft_strncmp("pl", line[0], 3) && ft_strncmp("cy", line[0], 3))
-	{
-		i = 0;
-		while (line[0][i])
-			i++;
-		if (line[0][i - 1] == '\n')
-			parsing_line_err("no value assigned to the identifier\n", parsing);
-		else
-			parsing_line_err("wrong identifier\n", parsing);
-		return (1);
-	}
-	i = 1;
-	while (line[i])
-	{
-		j = 0;
-		while (line[i][j] && line[i][j] != '\n')
-		{
-			if (!ft_isdigit(line[i][j]))
-			{
-				parsing_line_err("non-numeric value was assigned\n", parsing);
-				return (1);
-			}
-			j++;
-		}
-	}
-	return (0);
+	err = 0;
+	if (!p->amb_count || !p->cam_count || !p->lit_count)
+		ft_putstr_fd("Error\n", 2);
+	if (!p->amb_count)
+		err = print_err_msg(p, AMB, NB_ID, VACANT);
+	if (!p->cam_count)
+		err = print_err_msg(p, CAM, NB_ID, VACANT);
+	if (!p->lit_count)
+		err = (print_err_msg(p, LIT, NB_ID, VACANT));
+	return (err);
 }
 
-static int	parsing_line(char *line, t_parsing *parsing)
+int	file_parsing(t_parsing *parse, t_elem *elem)
 {
-	char	**split;
-
-	split = ft_split(line, ' ');
-	if (!split)
-		parsing_error("malloc error\n");
-	if (split[0][0] == '\n')
-	{
-		free_tab(split);
-		return (0);
-	}
-	if (verify_split_line(split, parsing))
-	{
-		free_tab(split);
-		return (1);
-	}
-	return (0);
-}
-
-void	file_parsing(int fd)
-{
-	t_parsing	parsing;
-	char			*line;
-
-	line = get_next_line(fd);
+	char	*line;
+	
+	line = get_next_line(parse->fd);
 	if (!line)
-		parsing_error("umm, file is empty\n");
-	init_parsing(&parsing);
+		return(file_is_empty(parse->file_path));
+	parse->line_index = 1;
 	while (line)
 	{
-		if (parsing_line(line, &parsing))
+		if (line_parsing(parse, elem, line))
 		{
 			free(line);
-			close(fd);
-			exit(1);
+			return (1);
 		}
 		free(line);
-		line = get_next_line(fd);
-		parsing.line_index++;
+		line = get_next_line(parse->fd);
+		parse->line_index++;
 	}
+	if (vacant_elements(parse))
+		return (1);
+	return (0);
 }

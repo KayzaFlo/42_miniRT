@@ -1,25 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   free_parsing.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/04 13:58:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/06 11:04:21 by arivera          ###   ########.fr       */
+/*   Created: 2023/08/04 16:20:05 by arivera           #+#    #+#             */
+/*   Updated: 2023/08/06 14:05:01 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "../../include/minirt.h"
+#include <stdbool.h>
 
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdbool.h>
-# include "../lib/libft/inc/libft.h"
-# include "../lib/libft/inc/ft_printf.h"
-# include "parsing.h"
-# include "elements.h"
+void	free_tab(char **tab)
+{
+	int	i;
+	
+	if (!tab)
+		return ;
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
 
-#endif
+void	free_parsing(t_parsing *parse, int exit_rt)
+{
+	if (parse->file_path)
+		free(parse->file_path);
+	if (parse->line)
+		free_tab(parse->line);
+	close(parse->fd);
+	if (exit_rt)
+		exit (1);
+}

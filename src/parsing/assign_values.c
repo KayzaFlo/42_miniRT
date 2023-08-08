@@ -1,25 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
+/*   assign_values.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/04 13:58:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/06 11:04:21 by arivera          ###   ########.fr       */
+/*   Created: 2023/08/06 12:38:34 by arivera           #+#    #+#             */
+/*   Updated: 2023/08/08 12:24:33 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINIRT_H
-# define MINIRT_H
+#include "../../include/minirt.h"
 
-# include <stdio.h>
-# include <unistd.h>
-# include <fcntl.h>
-# include <stdbool.h>
-# include "../lib/libft/inc/libft.h"
-# include "../lib/libft/inc/ft_printf.h"
-# include "parsing.h"
-# include "elements.h"
+int	assign_values(t_parsing *parse, t_elem *elem)
+{
+	int	parse_err;
 
-#endif
+	parse_err = 0;
+	if (!ft_strncmp(parse->line[0], "A", 2))
+		parse_err = ambiance_parsing(parse, elem);
+	else if (!ft_strncmp(parse->line[0], "C", 2))
+		parse_err = camera_parsing(parse, elem);
+	else if (!ft_strncmp(parse->line[0], "L", 2))
+		parse_err = light_parsing(parse, elem);
+	return (parse_err);
+}

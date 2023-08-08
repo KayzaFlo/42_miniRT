@@ -6,51 +6,44 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 13:58:02 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/04 15:42:06 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/08 12:29:51 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static int	open_file(char *file_path)
+static void	init_elem(t_elem *e)
 {
-	int	fd;
-	
-	fd = open(file_path, O_RDONLY);
-	if (fd < 0 || read(fd, 0, 0) < 0)
-		return (0);
-	return (fd);
+	e->sph = 0;
+	e->cyl = 0;
+	e->pl = 0;
 }
 
-static int	verify_file_extension(char *file_path)
+static int	init_parsing(t_parsing *p, char *file_path, int fd)
 {
-	char	*tmp;
-
-	tmp = ft_strrchr(file_path, '.');
-	if (!tmp)
-		return (1);
-	if (ft_strncmp(tmp, ".rt", 4))
-		return (1);
+	p->fd = fd;
+	p->amb_count = 0;
+	p->lit_count = 0;
+	p->cam_count = 0;
+	p->line_index = 0;
+	p->line = 0;
+	p->file_path = ft_strdup(file_path);
+	if (!file_path)
+		return (malloc_error());
 	return (0);
 }
 
-int	parsing(int	argc, char **argv)
+int	parsing(int	argc, char **argv, t_elem *e)
 {
-	int	fd;
+	t_parsing	p;
+	int			fd;
 	
-	if (argc != 2)
-	{
-		if (argc == 1)
-			parsing_error("not enough arguments\nusage: ./miniRT [file]\n");
-		if (argc > 2)
-			parsing_error("too many arguments\nusage: ./miniRT [file]\n");
-	}
-	if (verify_file_extension(argv[1]))
-		parsing_error("wrong file type. please use a .rt file\n");
-	fd = open_file(argv[1]);
-	if (!fd)
-		parsing_error("could not open file\n");
-	file_parsing(fd);
-	close(fd);
+	fd = input_parsing(argc, argv);
+	if (init_parsing(&p, argv[1], fd))
+		free_parsing(&p, true);
+	init_elem(e);
+	if (file_parsing(&p, e))
+		free_parsing(&p, true);
+	free_parsing(&p, false);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/04 16:47:49 by arivera          ###   ########.fr        #
+#    Updated: 2023/08/08 09:09:12 by arivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,26 @@ CC			:= gcc
 AR			:= ar -rcs
 RM			:= rm -f
 CFLAGS		= -Wall -Wextra -Werror
+PARS_DIR	:= src/parsing/
 
 #####	SOURCES		############################################################
 SRC			=	src/main.c \
-				src/parsing/parsing.c \
-				src/parsing/parsing_error.c \
-				src/parsing/file_parsing.c \
-				src/parsing/parsing_utils.c
+				$(PARS_DIR)ambiance_parsing.c \
+				$(PARS_DIR)assign_values.c \
+				$(PARS_DIR)camera_parsing.c \
+				$(PARS_DIR)colors_parse.c \
+				$(PARS_DIR)coord_parse.c \
+				$(PARS_DIR)file_parsing.c \
+				$(PARS_DIR)float_parse.c \
+				$(PARS_DIR)free_parsing.c \
+				$(PARS_DIR)input_parsing.c \
+				$(PARS_DIR)light_parsing.c \
+				$(PARS_DIR)line_parsing.c \
+				$(PARS_DIR)orientation_parse.c \
+				$(PARS_DIR)parsing_error.c \
+				$(PARS_DIR)parsing_utils.c \
+				$(PARS_DIR)parsing.c \
+				
 OBJ			=	$(SRC:.c=.o)
 
 #####	Makefile  objs		###################################################
@@ -40,11 +53,13 @@ CYAN 		:= \033[1;36m
 
 # ------ #
 
-all: $(LIBFT) $(MLX42) $(MINIRT) $(CLIENT)
+# all: $(LIBFT) $(MLX42) $(MINIRT) $(CLIENT)
+all: $(LIBFT) $(MINIRT) $(CLIENT)
 
 $(MINIRT): $(OBJ)
 	@ echo "$(GREEN)Compilation ${WHITE}of ${CYAN}$(MINIRT) ${WHITE}..."
-	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -ldl -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/" -pthread -lm
+#  @ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -ldl -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/" -pthread -lm
+	@ $(CC) -o $(MINIRT) $(OBJ) $(LIBFT)
 	@ echo "$(CYAN)$(MINIRT) $(GREEN)created$(WHITE) ✔️"
 
 # ------ #
@@ -72,5 +87,11 @@ fclean: clean
 	@ echo "$(RED)Deleting $(CYAN)$(CLIENT) $(WHITE)and $(CYAN)$(SERVER) $(WHITE)binary ✔️"
 
 re: fclean all
+
+check_leak:
+	@valgrind --show-leak-kinds=all --track-origins=yes --leak-check=full ./miniRT
+
+check_parsing:
+	@bash tests/parsing.sh
 
 .PHONY: all clean fclean re
