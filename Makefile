@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/07 12:22:28 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/08 12:52:13 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,8 +21,10 @@ CFLAGS		= -Wall -Wextra -Werror
 
 #####	SOURCES		############################################################
 SRC			=	src/main.c \
+				src/rendering.c \
 				src/color.c \
 				src/mathplus.c \
+				src/primitives.c \
 				src/vector3.c
 OBJ			=	$(SRC:.c=.o)
 
@@ -63,12 +65,12 @@ $(MLX42):
 clean:
 	@ ${RM} $(OBJ)
 	@ $(MAKE) clean -C lib/libft/
-	@ echo "$(RED)Deleting $(CYAN)$(CLIENT) $(WHITE)and $(CYAN)$(SERVER) $(WHITE)objs ✔️"
+	@ echo "$(RED)Deleting $(CYAN)$(MINIRT) $(WHITE)objs ✔️"
 
 fclean: clean
 	@ ${RM} $(SERVER) $(CLIENT)
 	@ $(MAKE) fclean -C lib/libft/
-	@ echo "$(RED)Deleting $(CYAN)$(CLIENT) $(WHITE)and $(CYAN)$(SERVER) $(WHITE)binary ✔️"
+	@ echo "$(RED)Deleting $(CYAN)$(MINIRT) $(WHITE)binary ✔️"
 
 re: fclean all
 

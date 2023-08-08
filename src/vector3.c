@@ -6,15 +6,16 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 15:48:50 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/07 11:07:06 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/08 11:31:33 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vector3.h"
+#include "rtmath.h"
 
 t_vec3	v3_new(float x, float y, float z)
 {
-	t_vec3 new;
+	t_vec3	new;
+
 	new.x = x;
 	new.y = y;
 	new.z = z;

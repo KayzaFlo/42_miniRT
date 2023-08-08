@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fgeslin42 <fgeslin42@student.42.fr>        +#+  +:+       +#+         #
+#    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/18 13:25:46 by fgeslin           #+#    #+#              #
-#    Updated: 2023/01/29 15:22:38 by fgeslin42        ###   ########.fr        #
+#    Updated: 2023/08/08 12:52:05 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -95,11 +95,11 @@ $(NAME): $(OBJ)
 	@ echo "$(CYAN)$(NAME) $(GREEN)created$(WHITE) ✔️"
 
 clean:
-	@ echo "$(RED)Deleting $(CYAN)$(NAME) $(WHITE) objs ✔️"
+	@ echo "$(RED)Deleting $(CYAN)$(NAME) $(WHITE)objs ✔️"
 	@ ${RM} $(OBJ) $(OBJ_BONUS)
 
 fclean: clean
-	@ echo "$(RED)Deleting $(CYAN)$(NAME) $(WHITE) binary ✔️"
+	@ echo "$(RED)Deleting $(CYAN)$(NAME) $(WHITE)binary ✔️"
 	@ ${RM} $(NAME)
 
 re: fclean all
