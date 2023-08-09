@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:11:18 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/09 12:19:38 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/09 16:35:49 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,12 @@ t_surface	sd_cylinder(t_vec3 p, t_vec3 r, float d, float h, t_vec3 col)
 // vec3 p = pos of a point point in the Plane
 // vec3 r = rotation (normalized)    //TOADD
 // vec3 col = color [0-255]
-t_surface	sd_plane(t_vec3 p, t_vec3 col)
+t_surface	sd_plane(t_vec3 p, t_vec3 n, t_vec3 col)
 {
 	t_surface	surface;
 
-	surface.sd = (p.y + 1.);
+	n = v3_normalize(n);
+	surface.sd = v3_dot(p, n);
 	surface.col = col;
 	return (surface);
 }

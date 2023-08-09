@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/09 10:48:10 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/09 17:20:02 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,26 +27,19 @@ t_surface	opU(t_surface obj1, t_surface obj2)
   return (obj1);
 }
 
-// TEMP
-	// t_surface	mrt_cylinder(t_vec3 p, t_vec3 r, float d, float h, t_vec3 col)
-	// {
-	// 	t_vec3 a = v3_new(-r.x * h / 2, -r.y * h / 2, -r.z * h / 2);
-	// 	t_vec3 b = v3_new(r.x * h / 2, r.y * h / 2, r.z * h / 2);
-	// 	return (sd_cylinder(p, a, b, d/2, col));
-	// }
-
 t_surface	map(t_vec3 p)
 {
-	t_surface sphereLeft = sd_sphere(v3_sub(p, v3_new(-2.5, -1, -2)), 1., v3_new(0.0f, 0.8f, 0.8f));
-	t_surface boxRight = sd_box(v3_sub(p, v3_new(2.5, 0, -2)), v3_new(0.8f, 0.8f, 0.8f), v3_new(1.0f, 0.58f, 0.29f));
-	// t_surface cylinder = sd_cylinder(v3_sub(p, v3_new(0.5, 0, -4)), v3_new(0.1f, -0.1f, 0.0f), v3_new(-0.1f, 0.35f, 0.1f), 1.0f, v3_new(0.8f, 0.1f, 0.89f));
-	t_surface mrtcylinder = sd_cylinder(v3_sub(p, v3_new(0.5, 0, -4)), v3_new(1.0f, 1.0f, 0.0f), 2.0f, 1.0f, v3_new(0.8f, 0.1f, 0.89f));
-	t_surface plane = sd_plane(p, v3_new(0.0f, 1.0f, 0.0f));
+	float		c = 1. + 0.7 * (((int)floor(p.x) + (int)floor(p.z - 5)) % 2);
+	t_vec3		floorcol = v3_new(c, c, c);
 
-	t_surface res = opU(sphereLeft, boxRight);
+	t_surface	sphereLeft = sd_sphere(v3_sub(p, v3_new(-2.5, -1, -2)), 1., v3_new(0.0f, 0.8f, 0.8f));
+	t_surface	boxRight = sd_box(v3_sub(p, v3_new(2.5, 0, -2)), v3_new(0.8f, 0.8f, 0.8f), v3_new(1.0f, 0.58f, 0.29f));
+	t_surface	cylinder = sd_cylinder(v3_sub(p, v3_new(0.5, 0, -4)), v3_new(1.0f, 1.0f, 0.0f), 2.0f, 1.0f, v3_new(0.8f, 0.1f, 0.89f));
+	t_surface	plane = sd_plane(v3_sub(p, v3_new(0, -1, -5)), v3_new(0.0f, 1.0f, 0.0f), floorcol);
+
+	t_surface	res = opU(sphereLeft, boxRight);
 	res = opU(res, plane);
-	// res = opU(res, cylinder);
-	res = opU(res, mrtcylinder);
+	res = opU(res, cylinder);
 	return res;
 }
 
