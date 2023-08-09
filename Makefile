@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/08 12:52:13 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/09 12:39:02 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,7 +68,7 @@ clean:
 	@ echo "$(RED)Deleting $(CYAN)$(MINIRT) $(WHITE)objs ✔️"
 
 fclean: clean
-	@ ${RM} $(SERVER) $(CLIENT)
+	@ ${RM} $(MINIRT)
 	@ $(MAKE) fclean -C lib/libft/
 	@ echo "$(RED)Deleting $(CYAN)$(MINIRT) $(WHITE)binary ✔️"
 

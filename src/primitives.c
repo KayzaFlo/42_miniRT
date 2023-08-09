@@ -6,17 +6,16 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:11:18 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/08 12:02:43 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/09 12:19:38 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtprim.h"
 
-// miniRT's Plane
-// vec3 pos = position
+// miniRT's Sphere
+// vec3 p = position
 // vec3 d = diameter
 // vec3 col = color [0-255]
-
 t_surface	sd_sphere(t_vec3 p, float r, t_vec3 col)
 {
 	t_surface	surface;
@@ -26,6 +25,10 @@ t_surface	sd_sphere(t_vec3 p, float r, t_vec3 col)
 	return (surface);
 }
 
+// miniRT's Sphere
+// vec3 p = position
+// vec3 b = bounding box
+// vec3 col = color [0-255]
 t_surface	sd_box(t_vec3 p, t_vec3 b, t_vec3 col)
 {
 	t_surface	surface;
@@ -38,42 +41,60 @@ t_surface	sd_box(t_vec3 p, t_vec3 b, t_vec3 col)
 	return (surface);
 }
 
+static float	getcyldist(float x, float y, float baba)
+{
+	float	d;
+
+	d = 0;
+	if (max(x, y) < 0.0f)
+		d = -min(x * x, y * y * baba);
+	else
+	{
+		if (x > 0.0f)
+			d += x * x;
+		if (y > 0.0f)
+			d += y * y * baba;
+	}
+	if (d < 0.0f)
+		return (-1.0f * sqrt(fabs(d)) / baba);
+	else
+		return (sqrt(fabs(d)) / baba);
+}
+
 // miniRT's Cylinder
-// vec3 pos = center of Cylinder
-// vec3 rot = rotation (normalized)
+// vec3 p = center of Cylinder
+// vec3 r = rotation (normalized)
 // float d = diameter
 // float h = height
 // vec3 col = color [0-255]
-
-// a = 1st point (cap's center)
-// b = 2nd point (cap's center)
-// r = radius
-t_surface	sd_cylinder(t_vec3 p, t_vec3 a, t_vec3 b, float r, t_vec3 col)
+t_surface	sd_cylinder(t_vec3 p, t_vec3 r, float d, float h, t_vec3 col)
 {
 	t_surface	surface;
-	t_vec3		pa = v3_sub(p, a);
-	t_vec3		ba = v3_sub(b, a);
-	float		baba = v3_dot(ba, ba);
-	float		paba = v3_dot(pa, ba);
+	t_vec3		a;
+	t_vec3		b;
+	float		baba;
+	float		paba;
 
-	float		x = v3_length(
-			v3_sub(v3_mult(pa, v3_new(baba, baba, baba)),
-			v3_mult(ba, v3_new(paba, paba, paba)))
-		) - r * baba;
-	float		y = fabs(paba - baba * 0.5f) - baba / 0.5f;
-	float		x2 = x * x;
-	float		y2 = y * y * baba;
-	float		d = (max(x, y) < 0.0f) ? -min(x2, y2) : (((x > 0.0f) ? x2 : 0.0f) + ((y > 0.0f) ? y2 : 0.0f));
-	surface.sd = (d < 0.0f ? -1.0f : 1.0f) * sqrt(fabs(d)) / baba;
+	r = v3_normalize(r);
+	a = v3_new(-r.x * h / 2, -r.y * h / 2, -r.z * h / 2);
+	b = v3_new(r.x * h / 2, r.y * h / 2, r.z * h / 2);
+	baba = v3_dot(v3_sub(b, a), v3_sub(b, a));
+	paba = v3_dot(v3_sub(p, a), v3_sub(b, a));
+	surface.sd = getcyldist(v3_length(v3_sub(
+					v3_mult(v3_sub(p, a), v3_new(baba, baba, baba)),
+					v3_mult(v3_sub(b, a), v3_new(paba, paba, paba))
+					)) - d / 2 * baba,
+			fabs(paba - baba * 0.5f) - baba / 0.5f,
+			baba
+			);
 	surface.col = col;
 	return (surface);
 }
 
 // miniRT's Plane
-// vec3 pos = pos of a point point in the Plane
-// vec3 rot = rotation (normalized)
+// vec3 p = pos of a point point in the Plane
+// vec3 r = rotation (normalized)    //TOADD
 // vec3 col = color [0-255]
-
 t_surface	sd_plane(t_vec3 p, t_vec3 col)
 {
 	t_surface	surface;
