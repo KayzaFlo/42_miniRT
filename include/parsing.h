@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:37:57 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 13:57:49 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 14:22:01 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "../lib/libft/inc/ft_printf.h"
 # include "elements.h"
 
+# define ISSPACE " \t\n\v\f\r"
 # define AMB "Ambiance: "
 # define CAM "Camera: "
 # define LIT "Light: "
@@ -83,6 +84,7 @@ void	*cylinder_parsing(t_parsing *p);
 void	*plan_parsing(t_parsing *p);
 int     ft_isspace(char c);
 int	    int_parse(char *s, int	*value);
+char	**ft_split_ultra(char *str, char *charset);
 
 void	print_elems(t_elem *e);
 

@@ -6,7 +6,7 @@
 #    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/10 14:03:13 by arivera          ###   ########.fr        #
+#    Updated: 2023/08/10 14:20:04 by arivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC			=	src/main.c \
 				$(PARS_DIR)parsing_utils.c \
 				$(PARS_DIR)parsing.c \
 				$(PARS_DIR)struct3_parse.c \
+				$(PARS_DIR)ft_split.c \
 				
 				
 OBJ			=	$(SRC:.c=.o)
