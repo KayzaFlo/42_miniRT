@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 08:26:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/07 15:54:02 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 08:50:12 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,20 +56,19 @@ typedef struct	s_lit
 
 
 
-typedef enum	e_prim
+enum	e_prim
 {
 	PRIM_SPH = 0,
 	PRIM_CYL,
 	PRIM_PLN,
 	PRIM_ERR
-}				t_prim;
+};
 
-typedef struct	s_prim_list
+typedef struct	s_prim
 {
 	void			*content;
-	t_prim			type;
-	struct s_list	*next;
-}				t_prim_list;
+	enum e_prim			type;
+}				t_prim;
 
 
 typedef struct	s_sph
@@ -83,8 +82,8 @@ typedef struct	s_cyl
 {
 	t_coord			coord;
 	t_vec3			norm;
-	int				dia;
-	int				hgt;
+	float			dia;
+	float			hgt;
 	t_col			col;
 }				t_cyl;
 
@@ -97,15 +96,10 @@ typedef struct	s_pl
 
 typedef struct	s_elem
 {
-	t_amb	amb;
-	t_lit	lit;
-	t_cam	cam;
-	t_sph	*sph;
-	int		nb_sph;
-	t_cyl	*cyl;
-	int		nb_cyl;
-	t_pl	*pl;
-	int		nb_pln;
+	t_amb		amb;
+	t_cam		cam;
+	t_list		*lit;
+	t_list		*prim_list;
 }				t_elem;
 
 #endif

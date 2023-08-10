@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:37:57 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/08 12:30:03 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 11:02:26 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,30 @@
 # define AMB "Ambiance: "
 # define CAM "Camera: "
 # define LIT "Light: "
-# define SPH 4
-# define CYL 5
-# define PLN 6
-# define INVALID_ID "Invalid identifier. Valid identifiers: 'A', 'C', 'L'\n"
+# define SPH "Sphere: "
+# define CYL "Cylinder: "
+# define PLN "Plan: "
+# define INV_ID "Invalid identifier. "
 
-# define NB_ID "declaration\n"
-# define COORD "coordinates\n"
-# define COL "colors\n"
-# define ORI "orientation\n"
-# define RATIO "luminosity ratio\n"
-# define FOV "field of view (FOV)\n"
-# define NB_INFO "information types\n"
-# define NB_COL "number of colors\n"
-# define NB_COORD "number of coordinates\n"
-# define NB_ORI "number of orientation vectors\n"
+# define VAL_ID "Valid identifiers: A, C, L, sp, cy, pl.\n"
+# define HGT "invalid value for height.\n"
+# define DIA "invalid value for diameter.\n"
+# define FOV "invalid value for FOV.\n"
+# define ORI "invalid value(s) for orientation.\n"
+# define NORM "invalid value(s) for normalized vectors.\n"
+# define COORD "invalid value(s) for coordinates.\n"
+# define COL "invalid value(s) for colors.\n"
+# define TOO_MANY "declared too many times.\n"
+# define RATIO "invalid value(s) for ratio.\n"
+# define WRONG_NB_INFO "wrong number of info.\n"
+# define VACANT "missing identifier.\n"
 
-# define VACANT "missing identifier "
-# define TOO_MANY "too many "
-# define INV_NB "incorrect number of "
-# define OUT_OF_RANGE "out of range "
-# define INV_VAL "invalid value for "
+typedef struct  s_err
+{
+    char    *elem;
+    char    *info;
+    int     malloc_err;
+}               t_err;
 
 typedef struct  s_parsing
 {
@@ -54,26 +57,33 @@ typedef struct  s_parsing
     int 	lit_count;
     int 	cam_count;
     int 	line_index;
+    t_err   err;
 }               t_parsing;
 
 int 	ft_tablen(char **tab);
 int	    parsing(int	argc, char **argv, t_elem *e);
 int	    input_error(char *s);
-int		print_err_msg(t_parsing *p, char *elem, char *info, char *type);
-int		malloc_error(void);
+void	print_err_msg(t_parsing *p, int vacant);
 int		input_parsing(int argc, char **argv);
+void	free_elem(t_elem *e);
 int		file_parsing(t_parsing *parse, t_elem *elem);
-int		line_parsing(t_parsing *parse, t_elem *elem, char *line);
 int		assign_values(t_parsing *parse, t_elem *elem);
 void	free_tab(char **tab);
-void	free_parsing(t_parsing *parsing, int exit_rt);
+int 	free_parsing(t_parsing *parsing);
 int		ambiance_parsing(t_parsing *p, t_elem *e);
 int		float_parse(char *str, float *var);
-int		coord_parse(char **coord, t_coord *c);
-int		orientation_parse(char **tab, t_vec3 *ori);
-int		colors_parse(char **rgb, t_col *col);
+int	    coord_parse(char *str, t_coord *c, t_parsing *p);
+int	    vec3_parse(char *vectors, t_vec3 *vec, t_parsing *p);
+int	    colors_parse(char *line, t_col *col, t_parsing *p);
 int	    camera_parsing(t_parsing *p, t_elem *e);
 int	    light_parsing(t_parsing *p, t_elem *e);
 long	ft_atol(char *str);
+void	*sphere_parsing(t_parsing *p);
+void	*cylinder_parsing(t_parsing *p);
+void	*plan_parsing(t_parsing *p);
+int     ft_isspace(char c);
+int	    int_parse(char *s, int	*value);
+
+void	print_elems(t_elem *e);
 
 #endif
