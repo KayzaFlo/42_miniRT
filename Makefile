@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/10 12:46:33 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/10 16:15:59 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,6 +38,8 @@ SRC			=	src/main.c \
 				$(PARS_DIR)parsing_utils.c \
 				$(PARS_DIR)parsing.c \
 				$(PARS_DIR)struct3_parse.c \
+				$(PARS_DIR)ft_split.c \
+				
 				
 OBJ			=	$(SRC:.c=.o)
 

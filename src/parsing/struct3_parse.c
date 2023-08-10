@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 11:28:59 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 11:29:31 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 14:24:13 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	vec3_parse(char *vectors, t_vec3 *vec, t_parsing *p)
 	return (free_tab(tab), 0);
 }
 
-int	colors_parse(char *line, t_col *col, t_parsing *p)
+int	colors_parse(char *line, t_vec3 *col, t_parsing *p)
 {
 	char	**rgb;
 
@@ -42,19 +42,19 @@ int	colors_parse(char *line, t_col *col, t_parsing *p)
 		return (p->err.malloc_err = 1, 1);
 	if (ft_tablen(rgb) != 3)
 		return (free_tab(rgb), 1);
-	if (int_parse(rgb[0], &col->r))
+	if (float_parse(rgb[0], &col->x))
 		return (free_tab(rgb), 1);
-	if (int_parse(rgb[1], &col->g))
+	if (float_parse(rgb[1], &col->y))
 		return (free_tab(rgb), 1);
-	if (int_parse(rgb[2], &col->b))
+	if (float_parse(rgb[2], &col->z))
 		return (free_tab(rgb), 1);
-	if (col->r > 255 || col->r < 0 || col->g > 255 || col->g < 0
-		|| col->b > 255 || col->b < 0)
+	if (col->x > 255 || col->x < 0 || col->y > 255 || col->y < 0
+		|| col->z > 255 || col->z < 0)
 		return (free_tab(rgb), 1);
 	return (free_tab(rgb), 0);
 }
 
-int	coord_parse(char *str, t_coord *c, t_parsing *p)
+int	coord_parse(char *str, t_vec3 *c, t_parsing *p)
 {
 	char	**coord;
 

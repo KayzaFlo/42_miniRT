@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/10 14:19:47 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/10 16:18:01 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,44 +40,18 @@ t_surface	map(t_vec3 p, t_elem *elem)
 		t_prim	*prim = (t_prim *)(list->content);
 		if (prim->type == PRIM_SPH) {
 			t_sph	*sph = (t_sph *)(prim->content);
-			t_vec3	pos = v3_new(sph->coord.x, sph->coord.y, sph->coord.z);
-			t_vec3	col = v3_new((float)sph->col.r, (float)sph->col.g, (float)sph->col.b);
-			res = opU(res, sd_sphere(v3_sub(p, pos), sph->dia, col));
-		// printf("SPH - ");
+			res = opU(res, sd_sphere(v3_sub(p, sph->coord), sph->dia, sph->col));
 		}
 		if (prim->type == PRIM_PLN) {
 			t_pl	*pl = (t_pl *)(prim->content);
-			t_vec3	pos = v3_new(pl->coord.x, pl->coord.y, pl->coord.z);
-			t_vec3	rot = v3_new(pl->ori.x, pl->ori.y, pl->ori.z);
-			t_vec3	col = v3_new((float)pl->col.r, (float)pl->col.g, (float)pl->col.b);
-			res = opU(res, sd_plane(v3_sub(p, pos), v3_normalize(rot), col));
-		// printf("PLN - ");
+			res = opU(res, sd_plane(v3_sub(p, pl->coord), v3_normalize(pl->ori), pl->col));
 		}
 		if (prim->type == PRIM_CYL) {
 			t_cyl	*cyl = (t_cyl *)(prim->content);
-			t_vec3	pos = v3_new(cyl->coord.x, cyl->coord.y, cyl->coord.z);
-			t_vec3	rot = v3_new(cyl->norm.x, cyl->norm.y, cyl->norm.z);
-			t_vec3	col = v3_new((float)cyl->col.r, (float)cyl->col.g, (float)cyl->col.b);
-			res = opU(res, sd_cylinder(v3_sub(p, pos), v3_normalize(rot), cyl->dia, cyl->hgt, col));
-		// printf("CYL - ");
+			res = opU(res, sd_cylinder(v3_sub(p, cyl->coord), v3_normalize(cyl->norm), cyl->dia, cyl->hgt, cyl->col));
 		}
 		list = list->next;
 	}
-		// printf("end map\n");
-	
-
-	// float		c = 1. + 0.7 * (((int)floor(p.x) + (int)floor(p.z - 5)) % 2);
-	// t_vec3		floorcol = v3_new(c, c, c);
-
-	// t_surface	sphereLeft = sd_sphere(v3_sub(p, v3_new(-2.5, -1, -2)), 1., v3_new(0.0f, 0.8f, 0.8f));
-	// t_surface	boxRight = sd_box(v3_sub(p, v3_new(2.5, 0, -2)), v3_new(0.8f, 0.8f, 0.8f), v3_new(1.0f, 0.58f, 0.29f));
-	// t_surface	cylinder = sd_cylinder(v3_sub(p, v3_new(0.5, 0, -4)), v3_new(1.0f, 1.0f, 0.0f), 2.0f, 1.0f, v3_new(0.8f, 0.1f, 0.89f));
-	// t_surface	plane = sd_plane(v3_sub(p, v3_new(0, -1, -5)), v3_new(0.0f, 1.0f, 0.0f), floorcol);
-
-	// res = opU(res, sphereLeft);
-	// res = opU(res, boxRight);
-	// res = opU(res, cylinder);
-	// res = opU(res, plane);
 	return res;
 }
 
@@ -119,7 +93,7 @@ t_surface	raymarch(t_vec3 ro, t_vec3 rd, t_elem *elem)
 
 void	render(mlx_image_t *img, t_elem *elem)
 {
-	const t_vec3	bgColor = v3_new((float)elem->amb.col.r, (float)elem->amb.col.g, (float)elem->amb.col.b);
+	const t_vec3	bgColor = elem->amb.col;
 	const t_vec3	ro = v3_new(elem->cam.coord.x, elem->cam.coord.y, elem->cam.coord.z); // Ray Origin / Camera
 	t_vec3			ray_direction; // Ray Direction
 	uint32_t		color;

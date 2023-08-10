@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 10:48:09 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 11:02:47 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 14:23:57 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	line_parsing(t_parsing *parse, t_elem *elem, char *line)
 	nl_rm = ft_split(line, '\n');
 	if (!nl_rm)
 		return (parse->err.malloc_err = 1, 1);
-	parse->line = ft_split(nl_rm[0], ' ');
+	parse->line = ft_split_ultra(nl_rm[0], ISSPACE);
 	free_tab(nl_rm);
 	if (!parse->line)
 		return (1);
