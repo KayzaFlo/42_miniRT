@@ -6,13 +6,13 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 13:26:31 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/07 14:28:03 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/09 18:12:00 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static int	ft_isspace(char c)
+int	ft_isspace(char c)
 {
 	if (c == ' ' || c == '\f' || c == '\n')
 		return (1);
@@ -46,14 +46,14 @@ long	ft_atol(char *str)
 	return (nbr * mult);
 }
 
-int ft_tablen(char **tab)
+int	ft_tablen(char **tab)
 {
-    int i;
+	int	i;
 
-    i = 0;
-    if (!tab)
-        return (0);
-    while (tab[i])
-        i++;
-    return (i);
+	i = 0;
+	if (!tab)
+		return (0);
+	while (tab[i])
+		i++;
+	return (i);
 }

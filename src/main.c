@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/08 12:36:26 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 10:33:34 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,38 +21,47 @@
 #define WIDTH 256
 #define HEIGHT 256
 
-static void	check_values_xd(t_elem e)
+void	del_prim(void *content)
 {
-	printf("amb ratio: %f\n", e.amb.ratio);
-	printf("amb col r: %d\n", e.amb.col.r);
-	printf("amb col g: %d\n", e.amb.col.g);
-	printf("amb col b: %d\n", e.amb.col.b);
+	t_prim	*prim;
 	
-	printf("lit coord x: %f\n", e.lit.coord.x);
-	printf("lit coord y: %f\n", e.lit.coord.y);
-	printf("lit coord z: %f\n", e.lit.coord.z);
-	printf("lit ratio: %f\n", e.lit.ratio);
-	printf("lit col r: %d\n", e.lit.col.r);
-	printf("lit col g: %d\n", e.lit.col.g);
-	printf("lit col b: %d\n", e.lit.col.b);
+	prim = (t_prim *)content;
+	if (prim->type == PRIM_SPH)
+		free((t_sph *)prim->content);
+	else if (prim->type == PRIM_CYL)
+		free((t_cyl *)prim->content);
+	else if (prim->type == PRIM_PLN)
+		free((t_pl *)prim->content);
+	free(prim);
+}
+
+void	del_lit(void *content)
+{
+	t_lit	*lit;
 	
-	printf("cam coord x: %f\n", e.cam.coord.x);
-	printf("cam coord y: %f\n", e.cam.coord.y);
-	printf("cam coord z: %f\n", e.cam.coord.z);
-	printf("cam ori x: %f\n", e.cam.ori.x);
-	printf("cam ori y: %f\n", e.cam.ori.y);
-	printf("cam ori z: %f\n", e.cam.ori.z);
-	printf("cam FOV: %d\n", e.cam.fov);
+	lit = (t_lit *)content;
+	free(content);
+}
+
+void	free_elem(t_elem *e)
+{
+	ft_lstclear(&e->prim_list, del_prim);
+	ft_lstclear(&e->lit, del_lit);
+	free(e);
 }
 
 int main(int argc, char *argv[])
 {
-	t_elem		elem;
-
-	if (parsing(argc, argv, &elem))
-		return(1);
-	else
-		printf("succesful parsing!\n");
-	check_values_xd(elem);
+	t_elem	*elem;
+	
+	elem = (t_elem *)malloc(sizeof(t_elem));
+	if (!elem)
+		return (ft_putstr_fd("Error\nmalloc error\n", 2), 1);
+	elem->prim_list = 0;
+	elem->lit = 0;
+	if (parsing(argc, argv, elem))
+		return (free_elem(elem), 1);
+	print_elems(elem);
+	free_elem(elem);
 	return (EXIT_SUCCESS);
 }

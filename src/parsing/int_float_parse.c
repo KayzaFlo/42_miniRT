@@ -1,63 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   float_parse.c                                      :+:      :+:    :+:   */
+/*   int_float_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:42:12 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/08 12:41:57 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 11:21:57 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minirt.h"
 
-static int	ft_strlen_int_float(char *s)
-{
-	int	i;
-	int	neg;
-	int	zeros;
-
-	neg = 0;
-	i = 0;
-	zeros = 0;
-	if (s[i] == '-')
-	{
-		neg = 1;
-		i++;
-	}
-	while (s[i] == '0')
-	{
-		i++;
-		zeros++;
-	}
-	while (s[i] && s[i] != '.')
-	{
-		i++;
-	}
-	return (i - neg - zeros);
-}
-
 static int	ft_is_valid_float(char *s)
 {
 	int	i;
 	int	digit;
+	int	len;
 
 	i = 0;
 	digit = 0;
-	if (!s)
-		return (1);
+	while (ft_isspace(s[i]))
+		i++;
 	if (s[i] == '-')
 		i++;
+	len = 0;
 	while (s[i])
 	{
 		if (!ft_isdigit(s[i]) && s[i] != '.')
 			return (0);
-		if (s[i] == '.')
+		if (s[i++] == '.')
 			digit++;
-		i++;
+		if (!digit)
+			len++;
 	}
-	if (digit > 1 || (ft_strlen_int_float(s) > 10))
+	if (digit > 1 || len > 10)
 		return (0);
 	if (ft_atol(s) > INT32_MAX || ft_atol(s) < INT32_MIN)
 		return (0);
@@ -69,10 +46,14 @@ static float	ft_strtof(char *str)
 	float	ret;
 	float	prec;
 	float	fract;
+	float	sign;
 
 	prec = 0.0;
 	fract = 1.0;
+	sign = 1.0;
 	ret = (float)ft_atoi(str);
+	if (ret < 0)
+		sign = -1.0;
 	while (*str && *str != '.')
 		str++;
 	if (*str++ == '.')
@@ -83,7 +64,7 @@ static float	ft_strtof(char *str)
 			prec += (*str - '0') / fract;
 			str++;
 		}
-		ret += prec;
+		ret += prec * sign;
 	}
 	return (ret);
 }
@@ -93,5 +74,40 @@ int	float_parse(char *str, float *var)
 	if (!ft_is_valid_float(str))
 		return (1);
 	*var = ft_strtof(str);
+	return (0);
+}
+
+static int	valid_int(char *s)
+{
+	int	i;
+	int	len;
+
+	i = 0;
+	len = 0;
+	while (ft_isspace(s[i]) == 1)
+		i++;
+	if (s[i] == '-')
+		i++;
+	while (s[i] == '0')
+		i++;
+	while (s[i])
+	{
+		if (!ft_isdigit(s[i]))
+			return (0);
+		i++;
+		len++;
+	}
+	if (len > 10)
+		return (0);
+	if (ft_atol(s) > INT32_MAX || ft_atol(s) < INT32_MIN)
+		return (0);
+	return (1);
+}
+
+int	int_parse(char *s, int	*value)
+{
+	if (!valid_int(s))
+		return (1);
+	*value = ft_atoi(s);
 	return (0);
 }
