@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/10 12:33:49 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/10 12:46:33 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,21 +27,17 @@ SRC			=	src/main.c \
 				src/mathplus.c \
 				src/primitives.c \
 				src/vector3.c \
-				$(PARS_DIR)ambiance_parsing.c \
 				$(PARS_DIR)assign_values.c \
-				$(PARS_DIR)camera_parsing.c \
-				$(PARS_DIR)colors_parse.c \
-				$(PARS_DIR)coord_parse.c \
 				$(PARS_DIR)file_parsing.c \
-				$(PARS_DIR)float_parse.c \
 				$(PARS_DIR)free_parsing.c \
 				$(PARS_DIR)input_parsing.c \
-				$(PARS_DIR)light_parsing.c \
-				$(PARS_DIR)line_parsing.c \
-				$(PARS_DIR)orientation_parse.c \
+				$(PARS_DIR)int_float_parse.c \
+				$(PARS_DIR)main_elem_parse.c \
+				$(PARS_DIR)mand_objs.c \
 				$(PARS_DIR)parsing_error.c \
 				$(PARS_DIR)parsing_utils.c \
 				$(PARS_DIR)parsing.c \
+				$(PARS_DIR)struct3_parse.c \
 				
 OBJ			=	$(SRC:.c=.o)
 

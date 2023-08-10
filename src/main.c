@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/10 12:39:34 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/10 13:20:57 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ int main(int argc, char *argv[])
 	elem->lit = 0;
 	if (parsing(argc, argv, elem))
 		return (free_elem(elem), 1);
-	render(img);
-	print_elems(elem);
+	render(img, elem);
+	// print_elems(elem);
 	free_elem(elem);
 
 	mlx_loop_hook(mlx, ft_hook, img);

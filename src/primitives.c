@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:11:18 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/09 16:35:49 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/10 13:48:47 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 // vec3 p = position
 // vec3 d = diameter
 // vec3 col = color [0-255]
-t_surface	sd_sphere(t_vec3 p, float r, t_vec3 col)
+t_surface	sd_sphere(t_vec3 p, float d, t_vec3 col)
 {
 	t_surface	surface;
 
-	surface.sd = v3_length(p) - r;
+	surface.sd = v3_length(p) - d / 2;
 	surface.col = col;
 	return (surface);
 }
