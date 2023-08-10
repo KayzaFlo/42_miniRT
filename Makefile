@@ -6,7 +6,7 @@
 #    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/08 09:09:12 by arivera          ###   ########.fr        #
+#    Updated: 2023/08/10 14:03:13 by arivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,21 +22,18 @@ PARS_DIR	:= src/parsing/
 
 #####	SOURCES		############################################################
 SRC			=	src/main.c \
-				$(PARS_DIR)ambiance_parsing.c \
 				$(PARS_DIR)assign_values.c \
-				$(PARS_DIR)camera_parsing.c \
-				$(PARS_DIR)colors_parse.c \
-				$(PARS_DIR)coord_parse.c \
 				$(PARS_DIR)file_parsing.c \
-				$(PARS_DIR)float_parse.c \
 				$(PARS_DIR)free_parsing.c \
 				$(PARS_DIR)input_parsing.c \
-				$(PARS_DIR)light_parsing.c \
-				$(PARS_DIR)line_parsing.c \
-				$(PARS_DIR)orientation_parse.c \
+				$(PARS_DIR)int_float_parse.c \
+				$(PARS_DIR)main_elem_parse.c \
+				$(PARS_DIR)mand_objs.c \
 				$(PARS_DIR)parsing_error.c \
 				$(PARS_DIR)parsing_utils.c \
 				$(PARS_DIR)parsing.c \
+				$(PARS_DIR)struct3_parse.c \
+				
 				
 OBJ			=	$(SRC:.c=.o)
 

@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/10 10:33:34 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 14:03:55 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
 	elem->lit = 0;
 	if (parsing(argc, argv, elem))
 		return (free_elem(elem), 1);
-	print_elems(elem);
 	free_elem(elem);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:37:57 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 11:02:26 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/10 13:57:49 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,9 @@ void	free_tab(char **tab);
 int 	free_parsing(t_parsing *parsing);
 int		ambiance_parsing(t_parsing *p, t_elem *e);
 int		float_parse(char *str, float *var);
-int	    coord_parse(char *str, t_coord *c, t_parsing *p);
+int	    coord_parse(char *str, t_vec3 *c, t_parsing *p);
 int	    vec3_parse(char *vectors, t_vec3 *vec, t_parsing *p);
-int	    colors_parse(char *line, t_col *col, t_parsing *p);
+int	    colors_parse(char *line, t_vec3 *col, t_parsing *p);
 int	    camera_parsing(t_parsing *p, t_elem *e);
 int	    light_parsing(t_parsing *p, t_elem *e);
 long	ft_atol(char *str);
