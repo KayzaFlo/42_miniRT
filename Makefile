@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/09 12:39:02 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/10 12:33:49 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ CC			:= gcc
 AR			:= ar -rcs
 RM			:= rm -f
 CFLAGS		= -Wall -Wextra -Werror
+PARS_DIR	:= src/parsing/
 
 #####	SOURCES		############################################################
 SRC			=	src/main.c \
@@ -25,7 +26,23 @@ SRC			=	src/main.c \
 				src/color.c \
 				src/mathplus.c \
 				src/primitives.c \
-				src/vector3.c
+				src/vector3.c \
+				$(PARS_DIR)ambiance_parsing.c \
+				$(PARS_DIR)assign_values.c \
+				$(PARS_DIR)camera_parsing.c \
+				$(PARS_DIR)colors_parse.c \
+				$(PARS_DIR)coord_parse.c \
+				$(PARS_DIR)file_parsing.c \
+				$(PARS_DIR)float_parse.c \
+				$(PARS_DIR)free_parsing.c \
+				$(PARS_DIR)input_parsing.c \
+				$(PARS_DIR)light_parsing.c \
+				$(PARS_DIR)line_parsing.c \
+				$(PARS_DIR)orientation_parse.c \
+				$(PARS_DIR)parsing_error.c \
+				$(PARS_DIR)parsing_utils.c \
+				$(PARS_DIR)parsing.c \
+				
 OBJ			=	$(SRC:.c=.o)
 
 #####	Makefile  objs		###################################################
@@ -73,5 +90,11 @@ fclean: clean
 	@ echo "$(RED)Deleting $(CYAN)$(MINIRT) $(WHITE)binary ✔️"
 
 re: fclean all
+
+check_leak:
+	@valgrind --show-leak-kinds=all --track-origins=yes --leak-check=full ./miniRT
+
+check_parsing:
+	@bash tests/parsing.sh
 
 .PHONY: all clean fclean re
