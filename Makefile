@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/10 16:15:59 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/10 16:26:00 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ MLX42		:= lib/MLX42/build/libmlx42.a
 CC			:= gcc
 AR			:= ar -rcs
 RM			:= rm -f
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= ##-Wall -Wextra -Werror
 PARS_DIR	:= src/parsing/
 
 #####	SOURCES		############################################################

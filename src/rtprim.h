@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:12:39 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/09 16:20:55 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/11 15:28:58 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 typedef struct s_surface
 {
 	float	sd;
+	t_vec3	n;
 	t_vec3	col;
 
 }				t_surface;

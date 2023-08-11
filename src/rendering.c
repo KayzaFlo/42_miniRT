@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/10 16:18:01 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/11 11:09:38 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_surface	opU(t_surface obj1, t_surface obj2)
 
 t_surface	map(t_vec3 p, t_elem *elem)
 {
-	(void)elem;
 	t_list		*list = elem->prim_list;
 	t_surface	res;
 
