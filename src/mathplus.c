@@ -34,3 +34,18 @@ float	clamp(float n, float min, float max)
 		return (max);
 	return (n);
 }
+
+float	step(float edge, float x)
+{
+	if (x < edge)
+		return (0);
+	return (1);
+}
+
+float	smoothstep(float edge0, float edge1, float x)
+{
+	float	t;
+	
+	t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
+	return (t * t * (3.0 - 2.0 * t));
+}

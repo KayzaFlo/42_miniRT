@@ -33,5 +33,7 @@ t_vec3	v3_mult(t_vec3 v1, t_vec3 v2);
 float	min(float a, float b);
 float	max(float a, float b);
 float	clamp(float n, float min, float max);
+float	step(float edge, float x);
+float	smoothstep(float edge0, float edge1, float x);
 
 #endif

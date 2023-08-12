@@ -14,9 +14,12 @@
 # define RTPRIM_H
 
 # include <stdlib.h>
+# include <stdint.h>
 # include "rtmath.h"
+#include "../include/minirt.h"
 
 // sd = signed distance
+// n = normal
 // col = color
 typedef struct s_surface
 {
@@ -26,10 +29,10 @@ typedef struct s_surface
 
 }				t_surface;
 
-t_surface	sd_sphere(t_vec3 p, float r, t_vec3 col);
-t_surface	sd_box(t_vec3 p, t_vec3 b, t_vec3 col);
-t_surface	sd_cylinder(t_vec3 p, t_vec3 r, float d, float h, t_vec3 col);
-t_surface	sd_plane(t_vec3 p, t_vec3 r, t_vec3 col);
+t_surface	plIntersect(t_vec3 ro, t_vec3 rd, t_pl *pl);
+t_surface	elliIntersect( t_vec3 ro, t_vec3 rd, t_vec3 r );
+t_surface	cylIntersect(t_vec3 ro, t_vec3 rd, t_cyl *cyl);
+t_surface	sphIntersect(t_vec3 ro, t_vec3 rd, t_sph *sph);
 
 uint32_t	hexcol(float r, float g, float b, float a);
 

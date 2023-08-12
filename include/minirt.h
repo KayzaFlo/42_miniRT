@@ -13,6 +13,7 @@
 #ifndef MINIRT_H
 # define MINIRT_H
 
+# include <stdint.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>

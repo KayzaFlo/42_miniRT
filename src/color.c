@@ -19,9 +19,9 @@ uint32_t	hexcol(float r, float g, float b, float a)
 	b = clamp(b, 0.0f, 255.0f);
 	a = clamp(a, 0.0f, 255.0f);
 	return (
-		((uint8_t)r << 24)
-		+ ((uint8_t)g << 16)
-		+ ((uint8_t)b << 8)
-		+ (uint8_t)a
+		((uint8_t)(r) << 24)
+		+ ((uint8_t)(g) << 16)
+		+ ((uint8_t)(b) << 8)
+		+ (uint8_t)(a)
 	);
 }
