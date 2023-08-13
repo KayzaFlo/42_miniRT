@@ -26,6 +26,7 @@ t_surface plIntersect(t_vec3 ro, t_vec3 rd, t_pl *pl)
 	}
 	surface.sd = a / b;
 	surface.n = pl->ori;
+	surface.col = pl->col;
 	return (surface);
 }
 
@@ -74,5 +75,6 @@ t_surface sphIntersect(t_vec3 ro, t_vec3 rd, t_sph *sph)
 	}
 	surface.sd = - b - sqrt( h );
 	surface.n = v3_normalize(v3_sub(v3_add(ro, v3_new(rd.x*surface.sd, rd.y*surface.sd, rd.z*surface.sd)), sph->coord));
+	surface.col = sph->col;
 	return (surface);
 }

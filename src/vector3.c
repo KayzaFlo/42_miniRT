@@ -73,3 +73,13 @@ t_vec3	v3_mult(t_vec3 v1, t_vec3 v2)
 	mult.z = v1.z * v2.z;
 	return (mult);
 }
+
+t_vec3	v3_multf(t_vec3 v, float f)
+{
+	t_vec3	mult;
+
+	mult.x = v.x * f;
+	mult.y = v.y * f;
+	mult.z = v.z * f;
+	return (mult);
+}

@@ -19,10 +19,14 @@ t_surface	primIntersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 	t_surface	nearest_surface;
 	t_surface	hit;
 	t_prim		*prim;
+	int c = 0;
 
 	nearest_surface.sd = 1e10;
 	while (prim_list)
 	{
+		c++;
+		if (c > 10) exit(-1);
+
 		prim = (t_prim *)(prim_list->content);
 		if (prim->type == PRIM_PLN)
 			hit = plIntersect(ro, rd, (t_pl *)(prim->content));
@@ -48,7 +52,7 @@ uint32_t	pixelcompute(int x, int y, t_elem *elem)
 	t_vec3		rd = v3_normalize(v3_new(x - WIDTH / 2, (y - HEIGHT / 2) * -1, -600));
 	t_lit		*light = (t_lit *)(elem->lit->content);
 	t_vec3		light_dir;
-	t_vec3		col = v3_new(.2, .2, .4);
+	t_vec3		col = elem->amb.col;
 	t_surface	hit;
 	t_vec3		hitpoint;
 
@@ -58,14 +62,19 @@ uint32_t	pixelcompute(int x, int y, t_elem *elem)
 	light_dir = v3_normalize(v3_sub(light->coord, hitpoint));
 	if (hit.sd < 1000)
 	{
-		float	r;
-		r = clamp(v3_dot(hit.n, light_dir), 0, 1); //Normal diff
-		r *= primIntersect(hitpoint, light_dir, elem->prim_list).sd < 1000 ? 0 : 1; // Hard Shadow
-		// col = v3_new(r, r ,r);
-		col = v3_new(r + elem->amb.ratio * elem->amb.col.x/255, r + elem->amb.ratio * elem->amb.col.y/255, r + elem->amb.ratio * elem->amb.col.z/255); // ambient - temp formula
+		col = hit.col;
+		//Normal diff
+		col = v3_multf(col, clamp(v3_dot(hit.n, light_dir), 0, 1));
+		// Hard Shadow
+		// col = v3_multf(col, primIntersect(hitpoint, light_dir, elem->prim_list).sd < 1000 ? 0 : 1);
+		// ambient - temp formula
+		col = v3_add(col, v3_multf(elem->amb.col, elem->amb.ratio));
 		//col = norm;		//DEBUG NORMAL
 	}
+	col = v3_multf(col, 1.0 / 255.0);
 	col = v3_new(sqrtf(col.x), sqrtf(col.y) ,sqrtf(col.z));
+	// col = v3_mult(col, col);
+	// return (hexcol(col.x, col.y, col.z, 255));
 	return (hexcol(col.x * 255, col.y * 255, col.z * 255, 255));
 }
 

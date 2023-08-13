@@ -29,6 +29,7 @@ t_vec3	v3_normalize(t_vec3 v);
 t_vec3	v3_add(t_vec3 v1, t_vec3 v2);
 t_vec3	v3_sub(t_vec3 v1, t_vec3 v2);
 t_vec3	v3_mult(t_vec3 v1, t_vec3 v2);
+t_vec3	v3_multf(t_vec3 v, float f);
 
 float	min(float a, float b);
 float	max(float a, float b);

@@ -18,6 +18,13 @@
 #include "../lib/MLX42/include/MLX42/MLX42.h"
 #include "../include/minirt.h"
 
+typedef struct	s_screen
+{
+	mlx_image_t	*img;
+	t_elem		*elem;
+}				t_screen;
+
+
 static void ft_error(void)
 {
 	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
@@ -40,7 +47,11 @@ void	del_prim(void *content)
 
 static void ft_hook(void* param)
 {
-	(void)param;
+	t_screen	*screen;
+
+	screen = (t_screen *)param;
+	screen->elem->cam.coord.z -= 0.1f;
+	render(screen->img, screen->elem);
 }
 
 void	del_lit(void *content)
@@ -64,15 +75,6 @@ int main(int argc, char *argv[])
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
-	if (!mlx)
-		ft_error();
-	img = mlx_new_image(mlx, WIDTH, HEIGHT);
-	ft_memset(img->pixels, 255, img->width * img->height * sizeof(int32_t));
-	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
-		ft_error();
-
 	elem = (t_elem *)malloc(sizeof(t_elem));
 	if (!elem)
 		return (ft_putstr_fd("Error\nmalloc error\n", 2), 1);
@@ -80,11 +82,23 @@ int main(int argc, char *argv[])
 	elem->lit = 0;
 	if (parsing(argc, argv, elem))
 		return (free_elem(elem), 1);
-	render(img, elem);
-	free_elem(elem);
+	
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
+	if (!mlx)
+		ft_error();
+	img = mlx_new_image(mlx, WIDTH, HEIGHT);
+	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
+		ft_error();
 
-	mlx_loop_hook(mlx, ft_hook, img);
+	// render(img, elem);
+
+	t_screen	screen;
+	screen.img = img;
+	screen.elem = elem;
+	mlx_loop_hook(mlx, ft_hook, &screen);
 	mlx_loop(mlx);
 	mlx_terminate(mlx);
+	free_elem(elem);
 	return (EXIT_SUCCESS);
 }
