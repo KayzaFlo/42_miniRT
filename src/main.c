@@ -6,17 +6,12 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/11 15:48:44 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/14 14:07:39 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <unistd.h>
-#include <string.h>
 #include "rtrender.h"
-#include "../lib/libft/inc/libft.h"
-#include "../lib/MLX42/include/MLX42/MLX42.h"
-#include "../include/minirt.h"
+#include "rtparsing.h"
 
 typedef struct	s_screen
 {
@@ -47,11 +42,16 @@ void	del_prim(void *content)
 
 static void ft_hook(void* param)
 {
+	static int	i = 0;
 	t_screen	*screen;
 
+	if (i > 0)
+		return ;
 	screen = (t_screen *)param;
 	screen->elem->cam.coord.z -= 0.1f;
-	render(screen->img, screen->elem);
+	// render(screen->img, screen->elem);
+	renderthreaded(screen->img, screen->elem);
+	// i++;
 }
 
 void	del_lit(void *content)
@@ -75,6 +75,7 @@ int main(int argc, char *argv[])
 	mlx_t		*mlx;
 	mlx_image_t	*img;
 
+	// PARSING
 	elem = (t_elem *)malloc(sizeof(t_elem));
 	if (!elem)
 		return (ft_putstr_fd("Error\nmalloc error\n", 2), 1);
@@ -82,7 +83,7 @@ int main(int argc, char *argv[])
 	elem->lit = 0;
 	if (parsing(argc, argv, elem))
 		return (free_elem(elem), 1);
-	
+	// MLX & IMG SETUP
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!mlx)
@@ -90,14 +91,13 @@ int main(int argc, char *argv[])
 	img = mlx_new_image(mlx, WIDTH, HEIGHT);
 	if (!img || (mlx_image_to_window(mlx, img, 0, 0) < 0))
 		ft_error();
-
-	// render(img, elem);
-
+	// RENDER LOOP
 	t_screen	screen;
 	screen.img = img;
 	screen.elem = elem;
 	mlx_loop_hook(mlx, ft_hook, &screen);
 	mlx_loop(mlx);
+	// QUIT
 	mlx_terminate(mlx);
 	free_elem(elem);
 	return (EXIT_SUCCESS);

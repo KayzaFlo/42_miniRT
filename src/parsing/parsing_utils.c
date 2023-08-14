@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 13:26:31 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/09 18:12:00 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/14 11:56:10 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+// #include "../../include/minirt.h"
+#include "rtparsing.h"
 
 int	ft_isspace(char c)
 {

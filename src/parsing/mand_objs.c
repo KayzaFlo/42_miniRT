@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   mand_objs.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 11:19:10 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 11:19:53 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/14 11:56:05 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+// #include "../../include/minirt.h"
+#include "rtparsing.h"
 
 void	*cylinder_parsing(t_parsing *p)
 {

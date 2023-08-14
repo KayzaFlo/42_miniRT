@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.h                                          :+:      :+:    :+:   */
+/*   rtparsing.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:37:57 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 14:22:01 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/14 11:55:20 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# include "../lib/libft/inc/libft.h"
-# include "../lib/libft/inc/ft_printf.h"
-# include "elements.h"
+# include "libft.h"
+# include "ft_printf.h"
+# include "rtelem.h"
 
 # define ISSPACE " \t\n\v\f\r"
 # define AMB "Ambiance: "

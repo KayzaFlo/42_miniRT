@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   int_float_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:42:12 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 11:21:57 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/14 11:56:01 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+// #include "../../include/minirt.h"
+#include "rtparsing.h"
 
 static int	ft_is_valid_float(char *s)
 {

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   assign_values.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 12:38:34 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/09 17:04:56 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/14 11:55:35 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+// #include "../../include/minirt.h"
+#include "rtparsing.h"
 
 typedef void*	(*t_primparse) (t_parsing *p);
 typedef int		(*t_identifier_parsing) (t_parsing *p, t_elem *e);

@@ -1,48 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   elements.h                                         :+:      :+:    :+:   */
+/*   rtprim.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/08/06 08:26:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 16:16:02 by fgeslin          ###   ########.fr       */
+/*   Created: 2023/08/08 11:12:39 by fgeslin           #+#    #+#             */
+/*   Updated: 2023/08/14 12:01:26 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ELEMENTS_H
-# define ELEMENTS_H
+#ifndef RTPRIM_H
+# define RTPRIM_H
 
-#include "../src/rtmath.h"
+# include <stdlib.h>
+# include <stdint.h>
+# include "rtmath.h"
+// # include "minirt.h"
 
-// typedef struct	s_vec3
-// {
-// 	float	x;
-// 	float	y;
-// 	float	z;
-// }				t_vec3;
-
-typedef struct	s_amb
+// sd = signed distance
+// n = normal
+// col = color
+typedef struct s_surface
 {
-	float	ratio;
+	float	sd;
+	t_vec3	n;
 	t_vec3	col;
-}				t_amb;
 
-typedef struct	s_cam
-{
-	t_vec3	coord;
-	t_vec3	ori;
-	int		fov;
-}				t_cam;
-
-typedef struct	s_lit
-{
-	t_vec3	coord;
-	float	ratio;
-	t_vec3	col;
-}				t_lit;
-
-
+}				t_surface;
 
 enum	e_prim
 {
@@ -57,7 +42,6 @@ typedef struct	s_prim
 	void			*content;
 	enum e_prim			type;
 }				t_prim;
-
 
 typedef struct	s_sph
 {
@@ -82,12 +66,9 @@ typedef struct	s_pl
 	t_vec3	col;
 }				t_pl;
 
-typedef struct	s_elem
-{
-	t_amb	amb;
-	t_cam	cam;
-	t_list	*lit;
-	t_list	*prim_list;
-}				t_elem;
+t_surface	plIntersect(t_vec3 ro, t_vec3 rd, t_pl *pl);
+t_surface	elliIntersect( t_vec3 ro, t_vec3 rd, t_vec3 r );
+t_surface	cylIntersect(t_vec3 ro, t_vec3 rd, t_cyl *cyl);
+t_surface	sphIntersect(t_vec3 ro, t_vec3 rd, t_sph *sph);
 
 #endif

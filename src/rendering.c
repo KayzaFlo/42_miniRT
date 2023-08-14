@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/11 11:09:38 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/14 14:08:10 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_surface	primIntersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 	return (nearest_surface);
 }
 
-uint32_t	pixelcompute(int x, int y, t_elem *elem)
+t_vec3	pixelcompute(float x, float y, t_elem *elem)
 {
 	t_vec3		ro = elem->cam.coord;
 	t_vec3		rd = v3_normalize(v3_new(x - WIDTH / 2, (y - HEIGHT / 2) * -1, -600));
@@ -66,7 +66,7 @@ uint32_t	pixelcompute(int x, int y, t_elem *elem)
 		//Normal diff
 		col = v3_multf(col, clamp(v3_dot(hit.n, light_dir), 0, 1));
 		// Hard Shadow
-		// col = v3_multf(col, primIntersect(hitpoint, light_dir, elem->prim_list).sd < 1000 ? 0 : 1);
+		col = v3_multf(col, primIntersect(hitpoint, light_dir, elem->prim_list).sd < 1000 ? 0 : 1);
 		// ambient - temp formula
 		col = v3_add(col, v3_multf(elem->amb.col, elem->amb.ratio));
 		//col = norm;		//DEBUG NORMAL
@@ -75,21 +75,36 @@ uint32_t	pixelcompute(int x, int y, t_elem *elem)
 	col = v3_new(sqrtf(col.x), sqrtf(col.y) ,sqrtf(col.z));
 	// col = v3_mult(col, col);
 	// return (hexcol(col.x, col.y, col.z, 255));
-	return (hexcol(col.x * 255, col.y * 255, col.z * 255, 255));
+	// return (hexcol(col.x * 255, col.y * 255, col.z * 255, 255));
+	return (col);
 }
 
 void	render(mlx_image_t *img, t_elem *elem)
 {
 	int	x;
 	int	y;
+	t_vec3	c;
 
 	y = -1;
-	while (y++ < HEIGHT)
+	while (y++ < HEIGHT - 1)
 	{
+// DEBUG Loading
+printf("\e[1;36m\r%05.1f%%\e[0m", (float)y / (HEIGHT - 1) * 100.0f);
+fflush(stdout);
 		x = -1;
-		while (x++ < WIDTH)
+		while (x++ < WIDTH - 1)
 		{
-			mlx_put_pixel(img, x, y, pixelcompute(x, y, elem));
+			c = pixelcompute(x, y, elem);
+			// ## Anti Alisasing TEST ##
+			// c = v3_add(c, pixelcompute(x - 0.3, y - 0.3, elem));
+			// c = v3_add(c, pixelcompute(x - 0.3, y + 0.3, elem));
+			// c = v3_add(c, pixelcompute(x + 0.3, y - 0.3, elem));
+			// c = v3_add(c, pixelcompute(x + 0.3, y + 0.3, elem));
+			// c = v3_multf(c, 0.2);
+			// ##                     ##
+			mlx_put_pixel(img, x, y, hexcol(c.x * 255, c.y * 255, c.z * 255, 255));
 		}
 	}
+// DEBUG Loading
+printf("\n");
 }

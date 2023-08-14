@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   struct3_parse.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 11:28:59 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 14:24:13 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/14 12:02:09 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+// #include "../../include/minirt.h"
+#include "rtparsing.h"
 
 int	vec3_parse(char *vectors, t_vec3 *vec, t_parsing *p)
 {

@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:11:18 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/10 13:48:47 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/14 10:35:21 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ t_surface elliIntersect( t_vec3 ro, t_vec3 rd, t_vec3 r )
 	}
 	float t = (-b - sqrt( h ))/a;
 	surface.sd = t;
-    t_vec3 n = v3_normalize(v3_new((ro.x+t*rd.x)/r2.x, (ro.y+t*rd.y)/r2.y, (ro.z+t*rd.z)/r2.z) );
-	surface.n = n;
+	surface.n = v3_normalize(v3_new((ro.x+t*rd.x)/r2.x, (ro.y+t*rd.y)/r2.y, (ro.z+t*rd.z)/r2.z) );
+	surface.col = v3_new(255, 0, 0);
     return (surface);
 }
 

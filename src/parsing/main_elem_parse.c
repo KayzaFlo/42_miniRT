@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main_elem_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/10 11:14:54 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/10 11:16:29 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/14 11:56:03 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minirt.h"
+// #include "../../include/minirt.h"
+#include "rtparsing.h"
 
 int	light_parsing(t_parsing *p, t_elem *e)
 {
