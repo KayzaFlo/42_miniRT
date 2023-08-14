@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/10 16:26:00 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/14 14:07:00 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,12 +17,13 @@ MLX42		:= lib/MLX42/build/libmlx42.a
 CC			:= gcc
 AR			:= ar -rcs
 RM			:= rm -f
-CFLAGS		= ##-Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror
 PARS_DIR	:= src/parsing/
 
 #####	SOURCES		############################################################
 SRC			=	src/main.c \
 				src/rendering.c \
+				src/renderingthread.c \
 				src/color.c \
 				src/mathplus.c \
 				src/primitives.c \
@@ -39,9 +40,12 @@ SRC			=	src/main.c \
 				$(PARS_DIR)parsing.c \
 				$(PARS_DIR)struct3_parse.c \
 				$(PARS_DIR)ft_split.c \
-				
-				
+
 OBJ			=	$(SRC:.c=.o)
+
+INC			=	./include
+INC_LIBFT	=	./lib/libft/inc
+INC_MLX42	=	./lib/MLX42/include/MLX42
 
 #####	Makefile  objs		###################################################
 WHITE		:= \033[0m
@@ -52,7 +56,7 @@ CYAN 		:= \033[1;36m
 
 .c.o:
 	@ echo "$(YELLOW)Compiling: $(WHITE)$<"
-	@ ${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
+	@ ${CC} ${CFLAGS} -c $< -o ${<:.c=.o} -I$(INC) -I$(INC_LIBFT) -I$(INC_MLX42)
 
 # ------ #
 
@@ -60,7 +64,7 @@ all: $(LIBFT) $(MLX42) $(MINIRT) $(CLIENT)
 
 $(MINIRT): $(OBJ)
 	@ echo "$(GREEN)Compilation ${WHITE}of ${CYAN}$(MINIRT) ${WHITE}..."
-	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -Iinclude -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 	@ echo "$(CYAN)$(MINIRT) $(GREEN)created$(WHITE) ✔️"
 
 # ------ #
