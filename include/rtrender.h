@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:07:26 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/14 14:27:31 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,17 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
+
+typedef struct	s_screen
+{
+	mlx_image_t	*img;
+	t_elem		*elem;
+}				t_screen;
+
+void		ft_hook(void* param);
+void		ft_close(void* param);
+void		ft_keyhook(mlx_key_data_t keydata, void* param);
+void		free_elem(t_elem *e);
 
 void		render(mlx_image_t *img, t_elem *elem);
 void		renderthreaded(mlx_image_t *img, t_elem *elem);

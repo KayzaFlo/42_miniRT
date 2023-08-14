@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/14 14:07:00 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/14 14:27:43 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRC			=	src/main.c \
 				src/mathplus.c \
 				src/primitives.c \
 				src/vector3.c \
+				src/cleaning.c \
+				src/mlxhooks.c \
 				$(PARS_DIR)assign_values.c \
 				$(PARS_DIR)file_parsing.c \
 				$(PARS_DIR)free_parsing.c \
