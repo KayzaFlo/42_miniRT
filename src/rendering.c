@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:08:10 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/16 14:39:37 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,15 @@ t_surface	primIntersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 		// 	hit = cylIntersect(ro, rd, (t_cyl *)(prim->content));
 		prim_list = prim_list->next;
 		if (hit.sd > 0 && hit.sd < nearest_surface.sd)
+		{
 			nearest_surface = hit;
+			nearest_surface.prim = prim;
+		}
 	}
 		// ** PRIM TEST **
-		hit = elliIntersect(v3_sub(ro, v3_new(-4, 0, -4)), rd, v3_new(2, 1, 1));
-		if (hit.sd > 0 && hit.sd < nearest_surface.sd)
-			nearest_surface = hit;
+		// hit = elliIntersect(v3_sub(ro, v3_new(-4, 0, -4)), rd, v3_new(2, 1, 1));
+		// if (hit.sd > 0 && hit.sd < nearest_surface.sd)
+		// 	nearest_surface = hit;
 		// ***************
 	return (nearest_surface);
 }

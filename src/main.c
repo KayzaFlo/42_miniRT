@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:28:44 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/16 16:18:03 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int main(int argc, char *argv[])
 	if (parsing(argc, argv, elem))
 		return (free_elem(elem), 1);
 	// MLX & IMG SETUP
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!mlx)
 		ft_error();
@@ -45,9 +44,14 @@ int main(int argc, char *argv[])
 	t_screen	screen;
 	screen.img = img;
 	screen.elem = elem;
+	screen.render = true;
+	screen.mlx = mlx;
+	screen.prim = 0;
+	// renderthreaded(screen.img, screen.elem);
 	mlx_loop_hook(mlx, ft_hook, &screen);
-	mlx_close_hook(mlx, ft_close, mlx);
-	mlx_key_hook(mlx, ft_keyhook, mlx);
+	handle_hooks(&screen);
+	mlx_put_string(mlx, "CAMERA", 10, HEIGHT - 25);
+	mlx_put_string(mlx, "LIGHT", 10, HEIGHT - 50);
 	mlx_loop(mlx);
 	// QUIT
 	mlx_terminate(mlx);
