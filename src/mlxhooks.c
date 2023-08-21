@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:29:15 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/21 15:29:58 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void ft_hook(void* param)
 		return ;
 	screen = (t_screen *)param;
 	screen->elem->cam.coord.z -= 0.1f;
-	// render(screen->img, screen->elem);
-	renderthreaded(screen->img, screen->elem);
+	render(screen->img, screen->elem);
+	// renderthreaded(screen->img, screen->elem);
 	// i++;
 }
 

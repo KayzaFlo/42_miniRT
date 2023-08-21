@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:28:44 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/16 16:17:46 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
 	if (parsing(argc, argv, elem))
 		return (free_elem(elem), 1);
 	// MLX & IMG SETUP
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	// mlx_set_setting(MLX_STRETCH_IMAGE, false);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!mlx)
 		ft_error();

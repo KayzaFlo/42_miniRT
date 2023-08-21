@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:08:10 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/21 16:16:59 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,17 @@ t_surface	primIntersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 			nearest_surface = hit;
 	}
 		// ** PRIM TEST **
-		hit = elliIntersect(v3_sub(ro, v3_new(-4, 0, -4)), rd, v3_new(2, 1, 1));
+		hit = elliIntersect(v3_sub(ro, v3_new(-4, 0, 9)), rd, v3_new(2, 1, 1));
 		if (hit.sd > 0 && hit.sd < nearest_surface.sd)
 			nearest_surface = hit;
 		// ***************
 	return (nearest_surface);
 }
 
-t_vec3	pixelcompute(float x, float y, t_elem *elem)
+t_vec3	pixelcompute(t_vec3 ro, t_vec3 rd, t_elem *elem)
 {
-	t_vec3		ro = elem->cam.coord;
-	t_vec3		rd = v3_normalize(v3_new(x - WIDTH / 2, (y - HEIGHT / 2) * -1, -600));
+	// t_vec3		ro = elem->cam.coord;
+	// t_vec3		rd = v3_normalize(v3_new(x - WIDTH / 2, (y - HEIGHT / 2) * -1, -600));
 	t_lit		*light = (t_lit *)(elem->lit->content);
 	t_vec3		light_dir;
 	t_vec3		col = elem->amb.col;
@@ -81,9 +81,11 @@ t_vec3	pixelcompute(float x, float y, t_elem *elem)
 
 void	render(mlx_image_t *img, t_elem *elem)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	t_vec3	c;
+	t_vec3	rd;
+	const float	rfov = elem->cam.fov * M_PI / 180.0f;
 
 	y = -1;
 	while (y++ < HEIGHT - 1)
@@ -94,7 +96,11 @@ fflush(stdout);
 		x = -1;
 		while (x++ < WIDTH - 1)
 		{
-			c = pixelcompute(x, y, elem);
+			rd.x = tan(((x - WIDTH / 2) / (float)WIDTH) * rfov);
+			rd.y = tan(((y - HEIGHT / 2) * -1 / (float)WIDTH) * rfov);
+			rd.z = 1;
+			rd = v3_normalize(rd);
+			c = pixelcompute(elem->cam.coord, rd, elem);
 			// ## Anti Alisasing TEST ##
 			// c = v3_add(c, pixelcompute(x - 0.3, y - 0.3, elem));
 			// c = v3_add(c, pixelcompute(x - 0.3, y + 0.3, elem));
