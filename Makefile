@@ -6,7 +6,7 @@
 #    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/15 11:50:21 by arivera          ###   ########.fr        #
+#    Updated: 2023/08/22 13:17:20 by arivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,9 @@ SRC			=	src/main.c \
 				src/vector3.c \
 				src/cleaning.c \
 				src/mlxhooks.c \
+				src/mlxhooks_camlight.c \
+				src/mlxhooks_misc.c \
+				src/mlxhooks_prim.c \
 				$(PARS_DIR)assign_values.c \
 				$(PARS_DIR)file_parsing.c \
 				$(PARS_DIR)free_parsing.c \
