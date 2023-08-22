@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/16 14:39:37 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/22 15:03:35 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,24 @@ t_surface	primIntersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 		// if (prim->type == PRIM_CYL)
 		// 	hit = cylIntersect(ro, rd, (t_cyl *)(prim->content));
 		prim_list = prim_list->next;
-		if (hit.sd > 0 && hit.sd < nearest_surface.sd)
+		if (hit.sd > 1e-5 && hit.sd < nearest_surface.sd)
 		{
 			nearest_surface = hit;
 			nearest_surface.prim = prim;
 		}
 	}
 		// ** PRIM TEST **
-		// hit = elliIntersect(v3_sub(ro, v3_new(-4, 0, -4)), rd, v3_new(2, 1, 1));
-		// if (hit.sd > 0 && hit.sd < nearest_surface.sd)
-		// 	nearest_surface = hit;
+	hit = elliIntersect(v3_sub(ro, v3_new(-4, 0, 9)), rd, v3_new(2, 1, 1));
+	if (hit.sd > 1e-5 && hit.sd < nearest_surface.sd)
+		nearest_surface = hit;
 		// ***************
 	return (nearest_surface);
 }
 
-t_vec3	pixelcompute(float x, float y, t_elem *elem)
+t_vec3	pixelcompute(t_vec3 ro, t_vec3 rd, t_elem *elem)
 {
-	t_vec3		ro = elem->cam.coord;
-	t_vec3		rd = v3_normalize(v3_new(x - WIDTH / 2, (y - HEIGHT / 2) * -1, -600));
+	// t_vec3		ro = elem->cam.coord;
+	// t_vec3		rd = v3_normalize(v3_new(x - WIDTH / 2, (y - HEIGHT / 2) * -1, -600));
 	t_lit		*light = (t_lit *)(elem->lit->content);
 	t_vec3		light_dir;
 	t_vec3		col = elem->amb.col;
@@ -84,9 +84,11 @@ t_vec3	pixelcompute(float x, float y, t_elem *elem)
 
 void	render(mlx_image_t *img, t_elem *elem)
 {
-	int	x;
-	int	y;
+	int		x;
+	int		y;
 	t_vec3	c;
+	t_vec3	rd;
+	const float	rfov = elem->cam.fov * M_PI / 180.0f;
 
 	y = -1;
 	while (y++ < HEIGHT - 1)
@@ -97,14 +99,11 @@ fflush(stdout);
 		x = -1;
 		while (x++ < WIDTH - 1)
 		{
-			c = pixelcompute(x, y, elem);
-			// ## Anti Alisasing TEST ##
-			// c = v3_add(c, pixelcompute(x - 0.3, y - 0.3, elem));
-			// c = v3_add(c, pixelcompute(x - 0.3, y + 0.3, elem));
-			// c = v3_add(c, pixelcompute(x + 0.3, y - 0.3, elem));
-			// c = v3_add(c, pixelcompute(x + 0.3, y + 0.3, elem));
-			// c = v3_multf(c, 0.2);
-			// ##                     ##
+			rd.x = tan(((x - WIDTH / 2) / (float)WIDTH) * rfov);
+			rd.y = tan(((y - HEIGHT / 2) * -1 / (float)WIDTH) * rfov);
+			rd.z = 1;
+			rd = v3_normalize(rd);
+			c = pixelcompute(elem->cam.coord, rd, elem);
 			mlx_put_pixel(img, x, y, hexcol(c.x * 255, c.y * 255, c.z * 255, 255));
 		}
 	}

@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:42:12 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/14 11:56:01 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/22 13:26:45 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static float	ft_strtof(char *str)
 	return (ret);
 }
 
-int	float_parse(char *str, float *var)
+int	float_parse(char *str, double *var)
 {
 	if (!ft_is_valid_float(str))
 		return (1);

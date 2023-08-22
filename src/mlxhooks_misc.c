@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:16:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/22 14:00:48 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/22 14:29:27 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,14 @@
 void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 {
 	t_vec3		ro = s->elem->cam.coord;
-	t_vec3		rd = v3_normalize(v3_new(x - WIDTH / 2, (y - HEIGHT / 2) * -1, -600));
+	t_vec3		rd;
 	t_surface	hit;
+	const float	rfov = s->elem->cam.fov * M_PI / 180.0f;
 
+	rd.x = tan(((x - WIDTH / 2) / (float)WIDTH) * rfov);
+	rd.y = tan(((y - HEIGHT / 2) * -1 / (float)WIDTH) * rfov);
+	rd.z = 1;
+	rd = v3_normalize(rd);
 	s->cam = 0;
 	s->light = 0;
 	s->prim = 0;

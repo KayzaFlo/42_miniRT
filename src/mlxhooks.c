@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/22 14:04:35 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/22 14:57:35 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,11 @@ void	ft_keyhook(mlx_key_data_t keydata, void *param)
 		ft_close(s->mlx);
 	if (keydata.key == MLX_KEY_Q && keydata.action == MLX_PRESS)
 		ft_close(s->mlx);
-	if (s->cam)
+	if (s->cam && keydata.action == MLX_PRESS)
 		camera_interact(keydata, s);
-	else if (s->light)
+	else if (s->light && keydata.action == MLX_PRESS)
 		light_interact(keydata, s);
-	else if (s->prim)
+	else if (s->prim && keydata.action == MLX_PRESS)
 		prim_interact(keydata, s);
 }
 

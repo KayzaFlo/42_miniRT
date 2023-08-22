@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/16 16:18:03 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/22 14:11:03 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int main(int argc, char *argv[])
 	if (parsing(argc, argv, elem))
 		return (free_elem(elem), 1);
 	// MLX & IMG SETUP
+	// mlx_set_setting(MLX_STRETCH_IMAGE, false);
 	mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!mlx)
 		ft_error();

@@ -6,13 +6,13 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 15:48:50 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/11 11:28:14 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/22 13:57:08 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtmath.h"
 
-t_vec3	v3_new(float x, float y, float z)
+t_vec3	v3_new(double x, double y, double z)
 {
 	t_vec3	new;
 
@@ -22,19 +22,19 @@ t_vec3	v3_new(float x, float y, float z)
 	return (new);
 }
 
-float	v3_dot(t_vec3 v1, t_vec3 v2)
+double	v3_dot(t_vec3 v1, t_vec3 v2)
 {
 	return ((v1.x * v2.x) + (v1.y * v2.y) + (v1.z * v2.z));
 }
 
-float	v3_length(t_vec3 v)
+double	v3_length(t_vec3 v)
 {
 	return (sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2)));
 }
 
 t_vec3	v3_normalize(t_vec3 v)
 {
-	float	l;
+	double	l;
 	t_vec3	normalized;
 
 	l = v3_length(v);
@@ -74,7 +74,7 @@ t_vec3	v3_mult(t_vec3 v1, t_vec3 v2)
 	return (mult);
 }
 
-t_vec3	v3_multf(t_vec3 v, float f)
+t_vec3	v3_multf(t_vec3 v, double f)
 {
 	t_vec3	mult;
 
@@ -83,3 +83,56 @@ t_vec3	v3_multf(t_vec3 v, float f)
 	mult.z = v.z * f;
 	return (mult);
 }
+
+t_vec3	v3_rotx(t_vec3 o, t_vec3 p, double angle)
+{
+	t_vec3	vec;
+	double	rad = angle * M_PI / 180.0f;
+
+	vec = v3_sub(p, o);
+	double	len = v3_length(vec);
+	vec.x = vec.x;
+	vec.y = cos(rad) * vec.y - sin(rad) * vec.z;
+	vec.z = sin(rad) * vec.y + cos(rad) * vec.z;
+	vec = v3_multf(v3_normalize(vec), len);
+	return (v3_add(vec, o));
+}
+
+
+t_vec3	v3_roty(t_vec3 o, t_vec3 p, double angle)
+{
+	t_vec3	vec;
+	double	rad = angle * M_PI / 180.0f;
+
+	vec = v3_sub(p, o);
+	double	len = v3_length(vec);
+	vec.x = cos(rad) * vec.x + sin(rad) * vec.z;
+	vec.y = vec.y;
+	vec.z = -sin(rad) * vec.x + cos(rad) * vec.z;
+	vec = v3_multf(v3_normalize(vec), len);
+	return (v3_add(vec, o));
+}
+
+
+t_vec3	v3_rotz(t_vec3 o, t_vec3 p, double angle)
+{
+	t_vec3	vec;
+	double	rad = angle * M_PI / 180.0f;
+
+	vec = v3_sub(p, o);
+	double	len = v3_length(vec);
+	vec.x = cos(rad) * vec.x - sin(rad) * vec.y;
+	vec.y = sin(rad) * vec.x + cos(rad) * vec.y;
+	vec.z = vec.z;
+	vec = v3_multf(v3_normalize(vec), len);
+	return (v3_add(vec, o));
+}
+
+// t_vec3	v3_rot(t_vec3 o, t_vec3 p, t_vec3 angle)
+// {
+// 	// double	len = v3_length(vec);
+
+// 	v3_rotz(o, p, angle.z);
+// 	v3_rotz(o, p, angle.x);
+// 	v3_rotz(o, p, angle.y);
+// }

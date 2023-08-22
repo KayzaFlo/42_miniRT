@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 08:26:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/14 11:59:36 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/22 14:06:04 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 typedef struct	s_amb
 {
-	float	ratio;
+	double	ratio;
 	t_vec3	col;
 }				t_amb;
 
@@ -33,7 +33,7 @@ typedef struct	s_cam
 typedef struct	s_lit
 {
 	t_vec3	coord;
-	float	ratio;
+	double	ratio;
 	t_vec3	col;
 }				t_lit;
 
