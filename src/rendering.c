@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/21 16:16:59 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/22 13:45:34 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@ t_surface	primIntersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 		// if (prim->type == PRIM_CYL)
 		// 	hit = cylIntersect(ro, rd, (t_cyl *)(prim->content));
 		prim_list = prim_list->next;
-		if (hit.sd > 0 && hit.sd < nearest_surface.sd)
+		if (hit.sd > 1e-5 && hit.sd < nearest_surface.sd)
 			nearest_surface = hit;
 	}
 		// ** PRIM TEST **
 		hit = elliIntersect(v3_sub(ro, v3_new(-4, 0, 9)), rd, v3_new(2, 1, 1));
-		if (hit.sd > 0 && hit.sd < nearest_surface.sd)
+		if (hit.sd > 1e-5 && hit.sd < nearest_surface.sd)
 			nearest_surface = hit;
 		// ***************
 	return (nearest_surface);
@@ -101,13 +101,6 @@ fflush(stdout);
 			rd.z = 1;
 			rd = v3_normalize(rd);
 			c = pixelcompute(elem->cam.coord, rd, elem);
-			// ## Anti Alisasing TEST ##
-			// c = v3_add(c, pixelcompute(x - 0.3, y - 0.3, elem));
-			// c = v3_add(c, pixelcompute(x - 0.3, y + 0.3, elem));
-			// c = v3_add(c, pixelcompute(x + 0.3, y - 0.3, elem));
-			// c = v3_add(c, pixelcompute(x + 0.3, y + 0.3, elem));
-			// c = v3_multf(c, 0.2);
-			// ##                     ##
 			mlx_put_pixel(img, x, y, hexcol(c.x * 255, c.y * 255, c.z * 255, 255));
 		}
 	}

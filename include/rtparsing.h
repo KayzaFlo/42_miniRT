@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:37:57 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/14 11:55:20 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/22 13:26:28 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		assign_values(t_parsing *parse, t_elem *elem);
 void	free_tab(char **tab);
 int 	free_parsing(t_parsing *parsing);
 int		ambiance_parsing(t_parsing *p, t_elem *e);
-int		float_parse(char *str, float *var);
+int		float_parse(char *str, double *var);
 int	    coord_parse(char *str, t_vec3 *c, t_parsing *p);
 int	    vec3_parse(char *vectors, t_vec3 *vec, t_parsing *p);
 int	    colors_parse(char *line, t_vec3 *col, t_parsing *p);

@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/21 14:47:17 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/22 13:15:42 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,16 @@ void	*routine(void *param)
 
 	pix = (t_pixel *)param;
 	y = pix->id;
+	const float	rfov = pix->elem->cam.fov * M_PI / 180.0f;
 	while (y < HEIGHT - 1)
 	{
 		x = -1;
 		while (x++ < WIDTH - 1)
 		{
-			rd = v3_normalize(v3_new(x - WIDTH / 2, (y - HEIGHT / 2) * -1, -600));
+			rd.x = tan(((x - WIDTH / 2) / (float)WIDTH) * rfov);
+			rd.y = tan(((y - HEIGHT / 2) * -1 / (float)WIDTH) * rfov);
+			rd.z = 1;
+			rd = v3_normalize(rd);
 			c = pixelcompute(pix->elem->cam.coord, rd, pix->elem);
 			// ## Anti Alisasing TEST ##
 			// c = v3_add(c, pixelcompute(x - 0.3, y - 0.3, pix->elem));

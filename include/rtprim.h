@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:12:39 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 12:01:26 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/22 14:06:20 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 // col = color
 typedef struct s_surface
 {
-	float	sd;
+	double	sd;
 	t_vec3	n;
 	t_vec3	col;
 
@@ -46,7 +46,7 @@ typedef struct	s_prim
 typedef struct	s_sph
 {
 	t_vec3	coord;
-	float	dia;
+	double	dia;
 	t_vec3	col;
 }				t_sph;
 
@@ -54,8 +54,8 @@ typedef struct	s_cyl
 {
 	t_vec3	coord;
 	t_vec3	norm;
-	float	dia;
-	float	hgt;
+	double	dia;
+	double	hgt;
 	t_vec3	col;
 }				t_cyl;
 
