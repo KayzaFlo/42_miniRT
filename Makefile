@@ -6,7 +6,7 @@
 #    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/22 13:17:20 by arivera          ###   ########.fr        #
+#    Updated: 2023/08/23 16:10:48 by arivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,22 +29,22 @@ SRC			=	src/main.c \
 				src/primitives.c \
 				src/vector3.c \
 				src/cleaning.c \
-				src/mlxhooks.c \
-				src/mlxhooks_camlight.c \
-				src/mlxhooks_misc.c \
-				src/mlxhooks_prim.c \
-				$(PARS_DIR)assign_values.c \
-				$(PARS_DIR)file_parsing.c \
-				$(PARS_DIR)free_parsing.c \
-				$(PARS_DIR)input_parsing.c \
-				$(PARS_DIR)int_float_parse.c \
-				$(PARS_DIR)main_elem_parse.c \
-				$(PARS_DIR)mand_objs.c \
-				$(PARS_DIR)parsing_error.c \
-				$(PARS_DIR)parsing_utils.c \
-				$(PARS_DIR)parsing.c \
-				$(PARS_DIR)struct3_parse.c \
-				$(PARS_DIR)ft_split.c \
+				src/mlxhooks/mlxhooks.c \
+				src/mlxhooks/mlxhooks_camlight.c \
+				src/mlxhooks/mlxhooks_misc.c \
+				src/mlxhooks/mlxhooks_prim.c \
+				src/parsing/assign_values.c \
+				src/parsing/file_parsing.c \
+				src/parsing/free_parsing.c \
+				src/parsing/input_parsing.c \
+				src/parsing/int_float_parse.c \
+				src/parsing/main_elem_parse.c \
+				src/parsing/mand_objs.c \
+				src/parsing/parsing_error.c \
+				src/parsing/parsing_utils.c \
+				src/parsing/parsing.c \
+				src/parsing/struct3_parse.c \
+				src/parsing/ft_split.c \
 
 OBJ			=	$(SRC:.c=.o)
 

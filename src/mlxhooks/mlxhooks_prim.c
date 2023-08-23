@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:14:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/22 15:40:22 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/23 16:14:49 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,7 @@ void	prim_interact(mlx_key_data_t keydata, t_screen *s)
 	t_sph	*sp;
 	// t_cyl	*cyl;
 	t_pl	*pl;
-	printf("lol\n");
 	
-	printf("%d\n", s->prim->type);
 	if (s->prim->type == PRIM_SPH)
 	{
 		sp = (t_sph *)s->prim->content;
