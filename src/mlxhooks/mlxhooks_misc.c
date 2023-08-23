@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:16:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/22 14:29:27 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/23 16:59:09 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 {
-	t_vec3		ro = s->elem->cam.coord;
+	t_vec3		ro;
 	t_vec3		rd;
 	t_surface	hit;
 	const float	rfov = s->elem->cam.fov * M_PI / 180.0f;
 
+	ro = s->elem->cam.coord;
 	rd.x = tan(((x - WIDTH / 2) / (float)WIDTH) * rfov);
 	rd.y = tan(((y - HEIGHT / 2) * -1 / (float)WIDTH) * rfov);
 	rd.z = 1;
@@ -28,17 +29,9 @@ void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 	s->light = 0;
 	s->prim = 0;
 	if (x > 5 && x < 90 && y > HEIGHT - 25)
-	{
-		s->cam = 1;
-		ft_putstr_fd("Camera selected\n", 1);
-		return ;
-	}
+		return (s->cam = 1, ft_putstr_fd("Camera selected\n", 1));
 	if (x > 5 && x < 70 && y > HEIGHT - 50)
-	{
-		s->light = 1;
-		ft_putstr_fd("Light selected\n", 1);
-		return ;
-	}
+		return (s->light = 1, ft_putstr_fd("Light selected\n", 1));
 	hit = primIntersect(ro, rd, s->elem->prim_list);
 	if (hit.sd >= 1000)
 		return ;
@@ -46,7 +39,14 @@ void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 	s->prim = hit.prim;
 }
 
-void	ft_hook(void* param)
+int	cam_dir(double cam_ori)
+{
+	if (cam_ori >= 0)
+		return (-1);
+	return (1);
+}
+
+void	ft_hook(void *param)
 {
 	static int	i = 0;
 	t_screen	*screen;
@@ -54,10 +54,11 @@ void	ft_hook(void* param)
 	if (i > 0)
 		return ;
 	screen = (t_screen *)param;
-	// screen->elem->cam.coord.z -= 0.1f;
-	// render(screen->img, screen->elem);
 	if (screen->render)
 		renderthreaded(screen->img, screen->elem);
-	// screen->render = false;
-	// i++;
 }
+
+// screen->elem->cam.coord.z -= 0.1f;
+// render(screen->img, screen->elem);
+// screen->render = false;
+	// i++;

@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/22 14:12:15 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/23 16:54:02 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,9 @@
 # define WIDTH 1280
 # define HEIGHT 720
 
-// # define MOD_SP "W, A, S, D, Space, Left Ctrl to move the selected sphere"
-// # define MOD_CAM "W, A, S, D, Space, Left Ctrl to move the camera"
-
-// values for s_screen->interaction
-
 # define ROTATE 1
 # define TRANSLATE 2
-# define TRANSLATE_DIST 0.5
+# define TL_DST 0.5
 
 typedef struct	s_screen
 {
@@ -42,6 +37,7 @@ typedef struct	s_screen
 	int			interaction;
 }				t_screen;
 
+int			cam_dir(double cam_ori);
 void		ft_hook(void* param);
 void		ft_close(void* param);
 void		ft_keyhook(mlx_key_data_t keydata, void* param);

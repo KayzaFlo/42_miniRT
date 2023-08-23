@@ -6,7 +6,7 @@
 #    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/23 16:10:48 by arivera          ###   ########.fr        #
+#    Updated: 2023/08/23 16:19:00 by arivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC			=	src/main.c \
 				src/primitives.c \
 				src/vector3.c \
 				src/cleaning.c \
+				src/cyl_intersect.c \
 				src/mlxhooks/mlxhooks.c \
 				src/mlxhooks/mlxhooks_camlight.c \
 				src/mlxhooks/mlxhooks_misc.c \

@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:11:42 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/22 13:59:24 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/23 16:52:59 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,17 @@ void	camera_interact(mlx_key_data_t keydata, t_screen *s)
 	if (s->interaction == TRANSLATE)
 	{
 		if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
-			s->elem->cam.coord.z -= TRANSLATE_DIST;
+			s->elem->cam.coord.z -= TL_DST * cam_dir(s->elem->cam.ori.z);
 		if (keydata.key == MLX_KEY_S && keydata.action == MLX_PRESS)
-			s->elem->cam.coord.z += TRANSLATE_DIST;
+			s->elem->cam.coord.z += TL_DST * cam_dir(s->elem->cam.ori.z);
 		if (keydata.key == MLX_KEY_A && keydata.action == MLX_PRESS)
-			s->elem->cam.coord.x -= TRANSLATE_DIST;
+			s->elem->cam.coord.x -= TL_DST;
 		if (keydata.key == MLX_KEY_D && keydata.action == MLX_PRESS)
-			s->elem->cam.coord.x += TRANSLATE_DIST;
+			s->elem->cam.coord.x += TL_DST;
 		if (keydata.key == MLX_KEY_SPACE && keydata.action == MLX_PRESS)
-			s->elem->cam.coord.y += TRANSLATE_DIST;
+			s->elem->cam.coord.y += TL_DST;
 		if (keydata.key == MLX_KEY_LEFT_CONTROL && keydata.action == MLX_PRESS)
-			s->elem->cam.coord.y -= TRANSLATE_DIST;
+			s->elem->cam.coord.y -= TL_DST;
 		return ;
 	}
 	if (keydata.key == MLX_KEY_W && keydata.action == MLX_PRESS)
