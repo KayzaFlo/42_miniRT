@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlxhooks_misc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:16:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/23 16:59:09 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/23 17:17:39 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 		return (s->cam = 1, ft_putstr_fd("Camera selected\n", 1));
 	if (x > 5 && x < 70 && y > HEIGHT - 50)
 		return (s->light = 1, ft_putstr_fd("Light selected\n", 1));
-	hit = primIntersect(ro, rd, s->elem->prim_list);
+	hit = prim_intersect(ro, rd, s->elem->prim_list);
 	if (hit.sd >= 1000)
 		return ;
 	ft_putstr_fd("Object selected\n", 1);
@@ -48,14 +48,16 @@ int	cam_dir(double cam_ori)
 
 void	ft_hook(void *param)
 {
-	static int	i = 0;
-	t_screen	*screen;
+	(void)param;
+	// static int	i = 0;
+	// t_screen	*screen;
 
-	if (i > 0)
-		return ;
-	screen = (t_screen *)param;
-	if (screen->render)
-		renderthreaded(screen->img, screen->elem);
+	// if (i > 0)
+		// return ;
+	// screen = (t_screen *)param;
+	// if (screen->render)
+		// renderthreaded(screen->img, screen->elem);
+		// render(screen->img, screen->elem);
 }
 
 // screen->elem->cam.coord.z -= 0.1f;

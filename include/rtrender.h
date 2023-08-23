@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtrender.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/23 16:54:02 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/23 17:09:46 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,11 @@ void		prim_interact(mlx_key_data_t keydata, t_screen *s);
 void		render(mlx_image_t *img, t_elem *elem);
 void		renderthreaded(mlx_image_t *img, t_elem *elem);
 t_vec3		pixelcompute(t_vec3 ro, t_vec3 rd, t_elem *elem);
-t_surface	primIntersect(t_vec3 ro, t_vec3 rd, t_list *prim_list);
+t_surface	prim_intersect(t_vec3 ro, t_vec3 rd, t_list *prim_list);
 
 uint32_t	hexcol(float r, float g, float b, float a);
+
+//DEBUG
+void	v3_print(t_vec3 v);
 
 #endif

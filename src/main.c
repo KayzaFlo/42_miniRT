@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/22 14:11:03 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/23 17:19:46 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int main(int argc, char *argv[])
 	screen.mlx = mlx;
 	screen.prim = 0;
 	// renderthreaded(screen.img, screen.elem);
+	render(img, elem);
 	mlx_loop_hook(mlx, ft_hook, &screen);
 	handle_hooks(&screen);
 	mlx_put_string(mlx, "CAMERA", 10, HEIGHT - 25);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
+#    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/23 16:19:00 by arivera          ###   ########.fr        #
+#    Updated: 2023/08/23 17:11:38 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,9 @@ SRC			=	src/main.c \
 				src/color.c \
 				src/mathplus.c \
 				src/primitives.c \
-				src/vector3.c \
+				src/v3_basics.c \
+				src/v3_rotations.c \
+				src/v3_algebraics.c \
 				src/cleaning.c \
 				src/cyl_intersect.c \
 				src/mlxhooks/mlxhooks.c \
@@ -46,6 +48,7 @@ SRC			=	src/main.c \
 				src/parsing/parsing.c \
 				src/parsing/struct3_parse.c \
 				src/parsing/ft_split.c \
+				src/debug.c \
 
 OBJ			=	$(SRC:.c=.o)
 
@@ -70,7 +73,7 @@ all: $(LIBFT) $(MLX42) $(MINIRT) $(CLIENT)
 
 $(MINIRT): $(OBJ)
 	@ echo "$(GREEN)Compilation ${WHITE}of ${CYAN}$(MINIRT) ${WHITE}..."
-	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/"
+	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 	@ echo "$(CYAN)$(MINIRT) $(GREEN)created$(WHITE) ✔️"
 
 # ------ #
