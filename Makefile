@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
+#    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/14 14:27:43 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/23 15:45:42 by arivera          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC			=	src/main.c \
 				src/vector3.c \
 				src/cleaning.c \
 				src/mlxhooks.c \
+				src/cyl_intersect.c \
 				$(PARS_DIR)assign_values.c \
 				$(PARS_DIR)file_parsing.c \
 				$(PARS_DIR)free_parsing.c \
@@ -66,7 +67,7 @@ all: $(LIBFT) $(MLX42) $(MINIRT) $(CLIENT)
 
 $(MINIRT): $(OBJ)
 	@ echo "$(GREEN)Compilation ${WHITE}of ${CYAN}$(MINIRT) ${WHITE}..."
-	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
+	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/"
 	@ echo "$(CYAN)$(MINIRT) $(GREEN)created$(WHITE) ✔️"
 
 # ------ #

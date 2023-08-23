@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtprim.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:12:39 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 12:01:26 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/23 14:24:45 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct	s_pl
 
 t_surface	plIntersect(t_vec3 ro, t_vec3 rd, t_pl *pl);
 t_surface	elliIntersect( t_vec3 ro, t_vec3 rd, t_vec3 r );
-t_surface	cylIntersect(t_vec3 ro, t_vec3 rd, t_cyl *cyl);
+t_surface	cyl_intersect(t_vec3 ro, t_vec3 rd, t_cyl *cyl);
 t_surface	sphIntersect(t_vec3 ro, t_vec3 rd, t_sph *sph);
 
 #endif

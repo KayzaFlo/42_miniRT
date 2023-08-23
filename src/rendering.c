@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:08:10 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/23 14:24:29 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_surface	primIntersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 			hit = plIntersect(ro, rd, (t_pl *)(prim->content));
 		if (prim->type == PRIM_SPH)
 			hit = sphIntersect(ro, rd, (t_sph *)(prim->content));
-		// if (prim->type == PRIM_CYL)
-		// 	hit = cylIntersect(ro, rd, (t_cyl *)(prim->content));
+		if (prim->type == PRIM_CYL)
+			hit = cyl_intersect(ro, rd, (t_cyl *)(prim->content));
 		prim_list = prim_list->next;
 		if (hit.sd > 0 && hit.sd < nearest_surface.sd)
 			nearest_surface = hit;
@@ -58,7 +58,7 @@ t_vec3	pixelcompute(float x, float y, t_elem *elem)
 
 
 	hit = primIntersect(ro, rd, elem->prim_list);
-	hitpoint = v3_add(ro, v3_new(rd.x * hit.sd, rd.y * hit.sd, rd.z * hit.sd));
+	hitpoint = v3_add(ro, v3_multf(rd, hit.sd));
 	light_dir = v3_normalize(v3_sub(light->coord, hitpoint));
 	if (hit.sd < 1000)
 	{

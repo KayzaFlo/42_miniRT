@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlxhooks.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:29:15 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/22 16:06:04 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void ft_hook(void* param)
 	if (i > 0)
 		return ;
 	screen = (t_screen *)param;
-	screen->elem->cam.coord.z -= 0.1f;
+	// screen->elem->cam.coord.z -= 0.1f;
 	// render(screen->img, screen->elem);
 	renderthreaded(screen->img, screen->elem);
 	// i++;

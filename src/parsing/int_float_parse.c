@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   int_float_parse.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 11:42:12 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/14 11:56:01 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/23 13:02:19 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static float	ft_strtof(char *str)
 	fract = 1.0;
 	sign = 1.0;
 	ret = (float)ft_atoi(str);
-	if (ret < 0)
+	if (*str == '-')
 		sign = -1.0;
 	while (*str && *str != '.')
 		str++;
