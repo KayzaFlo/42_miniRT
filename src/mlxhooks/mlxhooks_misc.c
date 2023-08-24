@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:16:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/23 17:17:39 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 10:59:22 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,9 @@ int	cam_dir(double cam_ori)
 void	ft_hook(void *param)
 {
 	(void)param;
-	// static int	i = 0;
-	// t_screen	*screen;
+	t_screen	*screen;
 
-	// if (i > 0)
-		// return ;
-	// screen = (t_screen *)param;
-	// if (screen->render)
-		// renderthreaded(screen->img, screen->elem);
-		// render(screen->img, screen->elem);
+	screen = (t_screen *)param;
+	if(screen->ismovepressed)
+		render(screen->img, screen->elem);
 }
-
-// screen->elem->cam.coord.z -= 0.1f;
-// render(screen->img, screen->elem);
-// screen->render = false;
-	// i++;

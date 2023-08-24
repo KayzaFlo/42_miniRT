@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/23 17:09:46 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 10:59:45 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct	s_screen
 	int			light;
 	int			cam;
 	int			interaction;
+	int			ismovepressed;
 }				t_screen;
 
 int			cam_dir(double cam_ori);

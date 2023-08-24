@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/23 17:12:38 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/23 17:52:35 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_vec3	pixelcompute(t_vec3 ro, t_vec3 rd, t_elem *elem)
 	return (v3_multf(col, 255));
 }
 
-// uvw => camera origin space
+// uvw => Referencial -rd
 // viewport_uv => viewport size
 t_vec3	*get_viewport(t_elem *elem, float theta)
 {

@@ -6,12 +6,13 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/23 17:19:01 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 11:01:06 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtrender.h"
 #include "rtparsing.h"
+
 
 void	ft_close(void *param)
 {
@@ -28,19 +29,22 @@ void	ft_keyhook(mlx_key_data_t keydata, void *param)
 	t_screen	*s;
 
 	s = (t_screen *)param;
-	if (keydata.key == MLX_KEY_ESCAPE && keydata.action == MLX_PRESS)
-		ft_close(s->mlx);
-	if (keydata.key == MLX_KEY_Q && keydata.action == MLX_PRESS)
-		ft_close(s->mlx);
-	if (s->cam && keydata.action == MLX_PRESS)
-		camera_interact(keydata, s);
-	else if (s->light && keydata.action == MLX_PRESS)
-		light_interact(keydata, s);
-	else if (s->prim && keydata.action == MLX_PRESS)
-		prim_interact(keydata, s);
 	if (keydata.action == MLX_PRESS)
-		render(s->img, s->elem);
-
+	{
+		if (keydata.key == MLX_KEY_ESCAPE)
+			ft_close(s->mlx);
+		if (keydata.key == MLX_KEY_Q)
+			ft_close(s->mlx);
+		if (s->cam)
+			camera_interact(keydata, s);
+		else if (s->light)
+			light_interact(keydata, s);
+		else if (s->prim)
+			prim_interact(keydata, s);
+		s->ismovepressed = 1;
+	}
+	if (keydata.action == MLX_RELEASE)
+		s->ismovepressed = 0;
 }
 
 void	ft_mouse(mouse_key_t but, action_t act, modifier_key_t mods, void *p)
