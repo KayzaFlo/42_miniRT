@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/07 12:19:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/08 11:32:12 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:32:42 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ float	step(float edge, float x)
 float	smoothstep(float edge0, float edge1, float x)
 {
 	float	t;
-	
+
 	t = clamp((x - edge0) / (edge1 - edge0), 0, 1);
 	return (t * t * (3.0 - 2.0 * t));
 }

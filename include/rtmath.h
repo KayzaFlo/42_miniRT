@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 15:48:26 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/23 11:06:25 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 14:25:34 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,11 @@ t_vec3	v3_add(t_vec3 v1, t_vec3 v2);
 t_vec3	v3_sub(t_vec3 v1, t_vec3 v2);
 t_vec3	v3_mult(t_vec3 v1, t_vec3 v2);
 t_vec3	v3_multf(t_vec3 v, double f);
-t_vec3	v3_rotx(t_vec3 o, t_vec3 p, double angle);
-t_vec3	v3_roty(t_vec3 o, t_vec3 p, double angle);
-t_vec3	v3_rotz(t_vec3 o, t_vec3 p, double angle);
-t_vec3	v3_rot(t_vec3 o, t_vec3 p, t_vec3 angle);
+t_vec3	v3_rotx(t_vec3 p, double angle);
+t_vec3	v3_roty(t_vec3 p, double angle);
+t_vec3	v3_rotz(t_vec3 p, double angle);
+t_vec3	v3_rotate(t_vec3 ref, t_vec3 point, t_vec3 angle);
+t_vec3	v3_localrotate(t_vec3 point, t_vec3 angle);
 
 float	min(float a, float b);
 float	max(float a, float b);
