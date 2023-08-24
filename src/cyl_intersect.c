@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cyl_intersect.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/23 15:44:24 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/23 15:56:51 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/24 15:50:41 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ t_surface	cyl_cap_intersect(t_vec3 ro, t_vec3 rd, t_cyl *cyl, t_vec3 c)
 	tab[2] = v3_add(c, v3_multf(tab[1], cyl->hgt));
 	cap = init_cyl_cap(cyl, c, tab[2], 0);
 	closest_cap.sd = -1;
-	surface_cap = plIntersect(ro, rd, &cap);
+	surface_cap = pl_intersect(ro, rd, &cap);
 	if (surface_cap.sd > 0)
 	{
 		tab[0] = c;
 		closest_cap = surface_cap;
 	}
 	cap = init_cyl_cap(cyl, c, tab[2], 1);
-	surface_cap = plIntersect(ro, rd, &cap);
+	surface_cap = pl_intersect(ro, rd, &cap);
 	if (surface_cap.sd > 0 && surface_cap.sd < closest_cap.sd)
 	{
 		tab[0] = tab[2];

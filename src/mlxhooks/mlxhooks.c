@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 14:26:05 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 15:17:57 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ void	ft_keyhook(mlx_key_data_t keydata, void *param)
 		else if (s->prim)
 			prim_interact(keydata, s);
 		s->ismovepressed = 1;
-		s->elem->cam.ori = v3_localrotate(s->elem->cam.ori, v3_new(0, 10, 10));
 	}
 	if (keydata.action == MLX_RELEASE)
 		s->ismovepressed = 0;

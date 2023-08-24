@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 11:09:29 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 16:48:12 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,33 +25,32 @@
 # define TRANSLATE 2
 # define TL_DST 0.5
 
-typedef struct	s_screen
+typedef struct s_screen
 {
 	mlx_image_t	*img;
 	t_elem		*elem;
 	mlx_t		*mlx;
 	t_prim		*prim;
-	int			render;
 	int			light;
 	int			cam;
 	int			interaction;
 	int			ismovepressed;
 }				t_screen;
 
-t_vec3	get_rd(t_vec3 *data, int x, int y, t_elem *elem);
-t_vec3	*get_viewport(t_elem *elem, float theta);
+t_vec3		get_rd(t_vec3 *data, int x, int y, t_elem *elem);
+t_vec3		*get_viewport(t_elem *elem, float theta);
 
 int			cam_dir(double cam_ori);
-void		ft_hook(void* param);
-void		ft_close(void* param);
-void		ft_keyhook(mlx_key_data_t keydata, void* param);
+void		ft_hook(void *param);
+void		ft_close(void *param);
+void		ft_keyhook(mlx_key_data_t keydata, void *param);
 void		handle_hooks(t_screen *screen);
 void		free_elem(t_elem *e);
 
 void		camera_interact(mlx_key_data_t keydata, t_screen *s);
 void		light_interact(mlx_key_data_t keydata, t_screen *s);
 void		ft_get_selection(t_screen *s, int32_t x, int32_t y);
-void 		ft_hook(void* param);
+void		ft_hook(void *param);
 void		prim_interact(mlx_key_data_t keydata, t_screen *s);
 
 void		render(mlx_image_t *img, t_elem *elem);
@@ -60,8 +59,5 @@ t_vec3		pixelcompute(t_vec3 ro, t_vec3 rd, t_elem *elem);
 t_surface	prim_intersect(t_vec3 ro, t_vec3 rd, t_list *prim_list);
 
 uint32_t	hexcol(float r, float g, float b, float a);
-
-//DEBUG
-void	v3_print(t_vec3 v);
 
 #endif

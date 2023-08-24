@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 13:06:59 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 16:27:38 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ t_surface	prim_intersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 	{
 		prim = (t_prim *)(prim_list->content);
 		if (prim->type == PRIM_PLN)
-			hit = plIntersect(ro, rd, (t_pl *)(prim->content));
+			hit = pl_intersect(ro, rd, (t_pl *)(prim->content));
 		if (prim->type == PRIM_SPH)
-			hit = sphIntersect(ro, rd, (t_sph *)(prim->content));
+			hit = sph_intersect(ro, rd, (t_sph *)(prim->content));
 		if (prim->type == PRIM_CYL)
 			hit = cyl_intersect(ro, rd, (t_cyl *)(prim->content));
 		prim_list = prim_list->next;
-		if (hit.sd > 1e-3 && hit.sd < nearest_surface.sd)
+		if (hit.sd > 1e-4 && hit.sd < nearest_surface.sd)
 		{
 			nearest_surface = hit;
 			nearest_surface.prim = prim;
@@ -76,7 +76,7 @@ t_vec3	pixelcompute(t_vec3 ro, t_vec3 rd, t_elem *elem)
 				v3_multf(elem->amb.col, elem->amb.ratio)
 			));
 	}
-	return (elem->amb.col);
+	return (v3_multf(elem->amb.col, elem->amb.ratio));
 }
 
 // uvw => Referencial -rd
@@ -92,6 +92,8 @@ t_vec3	*get_viewport(t_elem *elem, float theta)
 	data = ft_calloc(3, sizeof(*data));
 	uvw[W] = v3_normalize(v3_multf(elem->cam.ori, -1));
 	uvw[U] = v3_normalize(v3_cross(v3_new(0, 1, 0), uvw[W]));
+	if (!elem->cam.ori.x && !elem->cam.ori.z)
+		uvw[U] = v3_normalize(v3_cross(v3_new(0, 0, elem->cam.ori.y), uvw[W]));
 	uvw[V] = v3_cross(uvw[W], uvw[U]);
 	viewport_uv[U] = v3_multf(uvw[U], 2 * tan(theta / 2) * ratio);
 	viewport_uv[V] = v3_multf(uvw[V], -2 * tan(theta / 2));

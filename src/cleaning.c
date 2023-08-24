@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 14:25:54 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/14 14:29:01 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 15:54:26 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	del_prim(void *content)
 {
 	t_prim	*prim;
-	
+
 	prim = (t_prim *)content;
 	if (prim->type == PRIM_SPH)
 		free((t_sph *)prim->content);
@@ -29,7 +29,7 @@ static void	del_prim(void *content)
 static void	del_lit(void *content)
 {
 	t_lit	*lit;
-	
+
 	lit = (t_lit *)content;
 	free(lit);
 }

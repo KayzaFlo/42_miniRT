@@ -6,12 +6,12 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 17:37:57 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/22 13:26:28 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 16:46:20 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PARSING_H
-# define PARSING_H
+#ifndef RTPARSING_H
+# define RTPARSING_H
 
 # include <unistd.h>
 # include <fcntl.h>
@@ -42,50 +42,48 @@
 # define WRONG_NB_INFO "wrong number of info.\n"
 # define VACANT "missing identifier.\n"
 
-typedef struct  s_err
+typedef struct s_err
 {
-    char    *elem;
-    char    *info;
-    int     malloc_err;
-}               t_err;
+	char	*elem;
+	char	*info;
+	int		malloc_err;
+}				t_err;
 
-typedef struct  s_parsing
+typedef struct s_parsing
 {
 	char	*file_path;
 	char	**line;
 	int		fd;
-    int 	amb_count;
-    int 	lit_count;
-    int 	cam_count;
-    int 	line_index;
-    t_err   err;
-}               t_parsing;
+	int		amb_count;
+	int		lit_count;
+	int		cam_count;
+	int		line_index;
+	t_err	err;
+}				t_parsing;
 
-int 	ft_tablen(char **tab);
-int	    parsing(int	argc, char **argv, t_elem *e);
-int	    input_error(char *s);
+int		ft_tablen(char **tab);
+int		parsing(int argc, char **argv, t_elem *e);
+int		input_error(char *s);
 void	print_err_msg(t_parsing *p, int vacant);
 int		input_parsing(int argc, char **argv);
 void	free_elem(t_elem *e);
 int		file_parsing(t_parsing *parse, t_elem *elem);
 int		assign_values(t_parsing *parse, t_elem *elem);
 void	free_tab(char **tab);
-int 	free_parsing(t_parsing *parsing);
+int		free_parsing(t_parsing *parsing);
 int		ambiance_parsing(t_parsing *p, t_elem *e);
 int		float_parse(char *str, double *var);
-int	    coord_parse(char *str, t_vec3 *c, t_parsing *p);
-int	    vec3_parse(char *vectors, t_vec3 *vec, t_parsing *p);
-int	    colors_parse(char *line, t_vec3 *col, t_parsing *p);
-int	    camera_parsing(t_parsing *p, t_elem *e);
-int	    light_parsing(t_parsing *p, t_elem *e);
+int		coord_parse(char *str, t_vec3 *c, t_parsing *p);
+int		vec3_parse(char *vectors, t_vec3 *vec, t_parsing *p);
+int		colors_parse(char *line, t_vec3 *col, t_parsing *p);
+int		camera_parsing(t_parsing *p, t_elem *e);
+int		light_parsing(t_parsing *p, t_elem *e);
 long	ft_atol(char *str);
 void	*sphere_parsing(t_parsing *p);
 void	*cylinder_parsing(t_parsing *p);
 void	*plan_parsing(t_parsing *p);
-int     ft_isspace(char c);
-int	    int_parse(char *s, int	*value);
+int		ft_isspace(char c);
+int		int_parse(char *s, int	*value);
 char	**ft_split_ultra(char *str, char *charset);
-
-void	print_elems(t_elem *e);
 
 #endif
