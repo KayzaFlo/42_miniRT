@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rendering.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/23 17:52:35 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 15:34:01 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_surface	prim_intersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 		if (prim->type == PRIM_CYL)
 			hit = cyl_intersect(ro, rd, (t_cyl *)(prim->content));
 		prim_list = prim_list->next;
-		if (hit.sd > 1e-5 && hit.sd < nearest_surface.sd)
+		if (hit.sd > 1e-3 && hit.sd < nearest_surface.sd)
 		{
 			nearest_surface = hit;
 			nearest_surface.prim = prim;
@@ -57,25 +57,26 @@ t_vec3	pixelcompute(t_vec3 ro, t_vec3 rd, t_elem *elem)
 {
 	const t_lit		*light = (t_lit *)(elem->lit->content);
 	t_vec3			light_dir;
-	t_vec3			col;
 	t_surface		hit;
 	t_vec3			hitpoint;
+	float			shading;
 
-	col = elem->amb.col;
 	hit = prim_intersect(ro, rd, elem->prim_list);
 	hitpoint = v3_add(ro, v3_multf(rd, hit.sd));
 	light_dir = v3_normalize(v3_sub(light->coord, hitpoint));
 	if (hit.sd < 1000)
 	{
-		col = hit.col;
-		col = v3_multf(col, clamp(v3_dot(hit.n, light_dir), 0, 1));
-		if (prim_intersect(hitpoint, light_dir, elem->prim_list).sd < 1000)
-			col = v3_multf(col, 0);
-		col = v3_add(col, v3_multf(elem->amb.col, elem->amb.ratio));
+		shading = max(v3_dot(hit.n, light_dir), elem->amb.ratio);
+		if (prim_intersect(hitpoint, light_dir, elem->prim_list).sd
+			< v3_length(v3_sub(hitpoint, light->coord)) + 1e-3
+			&& shading > elem->amb.ratio)
+			shading = elem->amb.ratio;
+		return (v3_add(
+				v3_multf(hit.col, shading),
+				v3_multf(elem->amb.col, elem->amb.ratio)
+			));
 	}
-	col = v3_multf(col, 1.0 / 255.0);
-	col = v3_new(sqrtf(col.x), sqrtf(col.y), sqrtf(col.z));
-	return (v3_multf(col, 255));
+	return (elem->amb.col);
 }
 
 // uvw => Referencial -rd
@@ -91,6 +92,8 @@ t_vec3	*get_viewport(t_elem *elem, float theta)
 	data = ft_calloc(3, sizeof(*data));
 	uvw[W] = v3_normalize(v3_multf(elem->cam.ori, -1));
 	uvw[U] = v3_normalize(v3_cross(v3_new(0, 1, 0), uvw[W]));
+	if (!elem->cam.ori.x && !elem->cam.ori.z)
+		uvw[U] = v3_normalize(v3_cross(v3_new(0, 0, elem->cam.ori.y), uvw[W]));
 	uvw[V] = v3_cross(uvw[W], uvw[U]);
 	viewport_uv[U] = v3_multf(uvw[U], 2 * tan(theta / 2) * ratio);
 	viewport_uv[V] = v3_multf(uvw[V], -2 * tan(theta / 2));

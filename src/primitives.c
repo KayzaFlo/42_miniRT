@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   primitives.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:11:18 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/23 16:18:01 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/24 12:29:27 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_surface	plIntersect(t_vec3 ro, t_vec3 rd, t_pl *pl)
 	}
 	surface.sd = -a / b;
 	surface.n = pl->ori;
-	// v3_print(surface.n);
 	surface.col = pl->col;
 	return (surface);
 }
@@ -59,9 +58,6 @@ t_surface elliIntersect( t_vec3 ro, t_vec3 rd, t_vec3 r )
 t_surface	sphIntersect(t_vec3 ro, t_vec3 rd, t_sph *sph)
 {
 	t_surface	surface;
-	
-	//d.d + 2d.(p - c) + (p - c).(p - c) - r^2 = 0
-	// get (p-c) vector
 	
 	t_vec3 pc = v3_sub(ro, sph->coord);
 	double a = v3_dot(rd, rd);

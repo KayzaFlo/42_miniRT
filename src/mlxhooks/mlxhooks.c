@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 14:22:44 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/24 15:42:50 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@ static void	get_uvw(t_screen *s)
 	}
 	s->uvw[W] = v3_normalize(v3_multf(s->elem->cam.ori, 1));
 	s->uvw[U] = v3_normalize(v3_cross(v3_new(0, 1, 0), s->uvw[W]));
+	if (!s->elem->cam.ori.x && !s->elem->cam.ori.z)
+		s->uvw[U] = v3_normalize(v3_cross(v3_new(0, 0, s->elem->cam.ori.y),
+					s->uvw[W]));
 	s->uvw[W] = v3_cross(s->uvw[U], v3_new(0, 1, 0));
 	s->uvw[V] = v3_new(0, 1, 0);
 }

@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:11:42 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/24 14:14:54 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/24 15:54:48 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,26 @@ typedef enum e_uvw {
 	V,
 	W,
 }			t_uvw;
+
+void	camera_interact2(mlx_key_data_t key, t_screen *s)
+{
+	if (key.key == MLX_KEY_W && s->elem->cam.ori.y < 0.9)
+	{
+		s->elem->cam.ori.y += 0.1;
+		if (!s->elem->cam.ori.x && !s->elem->cam.ori.z)
+			s->elem->cam.ori.z = 0.2;
+	}
+	if (key.key == MLX_KEY_S && s->elem->cam.ori.y > -0.9)
+	{
+		s->elem->cam.ori.y -= 0.1;
+		if (!s->elem->cam.ori.x && !s->elem->cam.ori.z)
+			s->elem->cam.ori.z = 0.2;
+	}
+	if (key.key == MLX_KEY_A)
+		s->elem->cam.ori = v3_roty(s->elem->cam.ori, 30);
+	if (key.key == MLX_KEY_D)
+		s->elem->cam.ori = v3_roty(s->elem->cam.ori, -30);
+}
 
 void	camera_interact(mlx_key_data_t key, t_screen *s)
 {
@@ -37,14 +57,7 @@ void	camera_interact(mlx_key_data_t key, t_screen *s)
 			s->elem->cam.coord.y -= TL_DST;
 		return ;
 	}
-	if (key.key == MLX_KEY_W)
-		ft_putstr_fd("Camera would look up\n", 2);
-	if (key.key == MLX_KEY_S)
-		ft_putstr_fd("Camera would look down\n", 2);
-	if (key.key == MLX_KEY_A)
-		ft_putstr_fd("Camera would look left\n", 2);
-	if (key.key == MLX_KEY_D)
-		ft_putstr_fd("Camera would look right\n", 2);
+	camera_interact2(key, s);
 }
 
 void	light_interact(mlx_key_data_t key, t_screen *s)
