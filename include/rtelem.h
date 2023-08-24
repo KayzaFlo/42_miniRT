@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtelem.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/06 08:26:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/22 14:06:04 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/23 18:17:10 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct	s_elem
 	t_cam	cam;
 	t_list	*lit;
 	t_list	*prim_list;
+	int		render;
 }				t_elem;
 
 #endif

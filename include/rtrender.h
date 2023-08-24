@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 10:59:45 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 11:09:29 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ typedef struct	s_screen
 	int			interaction;
 	int			ismovepressed;
 }				t_screen;
+
+t_vec3	get_rd(t_vec3 *data, int x, int y, t_elem *elem);
+t_vec3	*get_viewport(t_elem *elem, float theta);
 
 int			cam_dir(double cam_ori);
 void		ft_hook(void* param);
