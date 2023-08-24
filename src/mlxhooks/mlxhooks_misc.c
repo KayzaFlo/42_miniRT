@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:16:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/24 11:09:44 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 11:15:28 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 	data = get_viewport(s->elem, s->elem->cam.fov * M_PI / 180.0f);
 	ro = s->elem->cam.coord;
 	rd = get_rd(data, x, y, s->elem);
+	free(data);
 	s->cam = 0;
 	s->light = 0;
 	s->prim = 0;
@@ -51,7 +52,6 @@ int	cam_dir(double cam_ori)
 
 void	ft_hook(void *param)
 {
-	(void)param;
 	t_screen	*screen;
 
 	screen = (t_screen *)param;
