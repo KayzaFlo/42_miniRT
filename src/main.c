@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 16:06:18 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 16:52:12 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,7 @@ int	main(int argc, char *argv[])
 	mlx_loop(screen.mlx);
 	mlx_terminate(screen.mlx);
 	free_elem(screen.elem);
+	if (screen.uvw)
+		free(screen.uvw);
 	return (EXIT_SUCCESS);
 }

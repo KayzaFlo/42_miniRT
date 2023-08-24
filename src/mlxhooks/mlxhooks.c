@@ -6,13 +6,19 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 15:17:57 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 16:51:22 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtrender.h"
 #include "rtparsing.h"
+#include <stdlib.h>
 
+typedef enum e_uvw {
+	U = 0,
+	V,
+	W,
+}			t_uvw;
 
 void	ft_close(void *param)
 {
@@ -24,20 +30,40 @@ void	ft_close(void *param)
 	exit(EXIT_SUCCESS);
 }
 
+static void	get_uvw(t_screen *s)
+{
+	if (s->uvw)
+		free(s->uvw);
+	s->uvw = (t_vec3 *)malloc(sizeof(t_vec3) * 3);
+	if (!s->uvw)
+	{
+		free_elem(s->elem);
+		exit(1);
+	}
+	s->uvw[W] = v3_normalize(v3_multf(s->elem->cam.ori, 1));
+	s->uvw[U] = v3_normalize(v3_cross(v3_new(0, 1, 0), s->uvw[W]));
+	if (!s->elem->cam.ori.x && !s->elem->cam.ori.z)
+		s->uvw[U] = v3_normalize(v3_cross(v3_new(0, 0, s->elem->cam.ori.y),
+					s->uvw[W]));
+	s->uvw[W] = v3_cross(s->uvw[U], v3_new(0, 1, 0));
+	s->uvw[V] = v3_new(0, 1, 0);
+}
+
 void	ft_keyhook(mlx_key_data_t keydata, void *param)
 {
 	t_screen	*s;
 
 	s = (t_screen *)param;
-	if (keydata.action == MLX_PRESS)
+	if (keydata.action == MLX_PRESS && valid_key(keydata))
 	{
+		get_uvw(s);
 		if (keydata.key == MLX_KEY_ESCAPE)
 			ft_close(s->mlx);
 		if (keydata.key == MLX_KEY_Q)
 			ft_close(s->mlx);
-		if (s->cam)
+		if (s->selected == T_CAM)
 			camera_interact(keydata, s);
-		else if (s->light)
+		else if (s->selected == T_LIGHT)
 			light_interact(keydata, s);
 		else if (s->prim)
 			prim_interact(keydata, s);
@@ -65,22 +91,9 @@ void	ft_mouse(mouse_key_t but, action_t act, modifier_key_t mods, void *p)
 		ft_get_selection(s, x, y);
 }
 
-void	ft_zoom(double xdelta, double ydelta, void *param)
-{
-	t_elem	*elem;
-
-	elem = (t_elem *)param;
-	(void)xdelta;
-	if (ydelta > 0)
-		elem->cam.coord.z -= 1;
-	else if (ydelta < 0)
-		elem->cam.coord.z += 1;
-}
-
 void	handle_hooks(t_screen *screen)
 {
 	mlx_close_hook(screen->mlx, ft_close, screen->mlx);
-	mlx_scroll_hook(screen->mlx, ft_zoom, screen->elem);
 	mlx_key_hook(screen->mlx, ft_keyhook, screen);
 	mlx_mouse_hook(screen->mlx, ft_mouse, screen);
 	(void)screen;

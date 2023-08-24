@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 16:48:12 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 16:50:32 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # define WIDTH 1280
 # define HEIGHT 720
 
+# define T_CAM 1
+# define T_LIGHT 2
+
 # define ROTATE 1
 # define TRANSLATE 2
 # define TL_DST 0.5
@@ -31,8 +34,9 @@ typedef struct s_screen
 	t_elem		*elem;
 	mlx_t		*mlx;
 	t_prim		*prim;
-	int			light;
-	int			cam;
+	t_vec3		*uvw;
+	int			selected;
+	int			render;
 	int			interaction;
 	int			ismovepressed;
 }				t_screen;
@@ -46,6 +50,7 @@ void		ft_close(void *param);
 void		ft_keyhook(mlx_key_data_t keydata, void *param);
 void		handle_hooks(t_screen *screen);
 void		free_elem(t_elem *e);
+int			valid_key(mlx_key_data_t key);
 
 void		camera_interact(mlx_key_data_t keydata, t_screen *s);
 void		light_interact(mlx_key_data_t keydata, t_screen *s);
