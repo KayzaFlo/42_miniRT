@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   mlxhooks_prim.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:14:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/24 11:04:47 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 13:08:12 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtrender.h"
 #include "rtparsing.h"
+
+typedef enum e_uvw {
+	U = 0,
+	V,
+	W,
+}			t_uvw;
 
 static void	sphere_interact(mlx_key_data_t key, t_screen *s, t_sph *sp)
 {
@@ -22,13 +28,13 @@ static void	sphere_interact(mlx_key_data_t key, t_screen *s, t_sph *sp)
 	if (s->interaction == TRANSLATE)
 	{
 		if (key.key == MLX_KEY_W)
-			sp->coord.z -= TL_DST * cam_dir(s->elem->cam.ori.z);
+			sp->coord = v3_add(sp->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_S)
-			sp->coord.z += TL_DST * cam_dir(s->elem->cam.ori.z);
+			sp->coord = v3_sub(sp->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_A)
-			sp->coord.x -= TL_DST * -1 * cam_dir(s->elem->cam.ori.z);
+			sp->coord = v3_add(sp->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_D)
-			sp->coord.x += TL_DST * -1 * cam_dir(s->elem->cam.ori.z);
+			sp->coord = v3_sub(sp->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_SPACE)
 			sp->coord.y += TL_DST;
 		if (key.key == MLX_KEY_LEFT_CONTROL)
@@ -38,20 +44,20 @@ static void	sphere_interact(mlx_key_data_t key, t_screen *s, t_sph *sp)
 
 static void	cylinder_interact(mlx_key_data_t key, t_screen *s, t_cyl *cyl)
 {
-	if (key.key == MLX_KEY_UP && key.action == 1 && cyl->dia < INT32_MAX)
+	if (key.key == MLX_KEY_UP && cyl->dia < INT32_MAX)
 		cyl->dia += 0.25;
 	if (key.key == MLX_KEY_DOWN && cyl->dia > 0.25)
 		cyl->dia -= 0.25;
 	if (s->interaction == TRANSLATE)
 	{
 		if (key.key == MLX_KEY_W)
-			cyl->coord.z -= TL_DST * cam_dir(s->elem->cam.ori.z);
+			cyl->coord = v3_add(cyl->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_S)
-			cyl->coord.z += TL_DST * cam_dir(s->elem->cam.ori.z);
+			cyl->coord = v3_sub(cyl->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_A)
-			cyl->coord.x -= TL_DST * -1 * cam_dir(s->elem->cam.ori.z);
+			cyl->coord = v3_add(cyl->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_D)
-			cyl->coord.x += TL_DST * -1 * cam_dir(s->elem->cam.ori.z);
+			cyl->coord = v3_sub(cyl->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_SPACE)
 			cyl->coord.y += TL_DST;
 		if (key.key == MLX_KEY_LEFT_CONTROL)
@@ -64,13 +70,13 @@ static void	plan_interact(mlx_key_data_t key, t_screen *s, t_pl *pl)
 	if (s->interaction == TRANSLATE)
 	{
 		if (key.key == MLX_KEY_W)
-			pl->coord.z -= TL_DST * cam_dir(s->elem->cam.ori.z);
+			pl->coord = v3_add(pl->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_S)
-			pl->coord.z += TL_DST * cam_dir(s->elem->cam.ori.z);
+			pl->coord = v3_sub(pl->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_A)
-			pl->coord.x -= TL_DST * cam_dir(s->elem->cam.ori.z);
+			pl->coord = v3_add(pl->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_D)
-			pl->coord.x += TL_DST * cam_dir(s->elem->cam.ori.z);
+			pl->coord = v3_sub(pl->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_SPACE)
 			pl->coord.y += TL_DST;
 		if (key.key == MLX_KEY_LEFT_CONTROL)

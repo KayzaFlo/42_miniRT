@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 11:10:32 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/24 12:46:14 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int main(int argc, char *argv[])
 	screen.render = true;
 	screen.mlx = mlx;
 	screen.prim = 0;
+	screen.uvw = 0;
 	// renderthreaded(screen.img, screen.elem);
 	render(img, elem);
 	mlx_loop_hook(mlx, ft_hook, &screen);
@@ -58,5 +59,7 @@ int main(int argc, char *argv[])
 	// QUIT
 	mlx_terminate(mlx);
 	free_elem(elem);
+	if (screen.uvw)
+		free(screen.uvw);
 	return (EXIT_SUCCESS);
 }
