@@ -6,7 +6,7 @@
 #    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/25 13:54:14 by fgeslin          ###   ########.fr        #
+#    Updated: 2023/08/25 13:56:06 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,6 @@ PARS_DIR	:= src/parsing/
 SRC			=	src/main.c \
 				src/rendering.c \
 				src/lighting.c \
-				src/renderingthread.c \
 				src/color.c \
 				src/mathplus.c \
 				src/primitives.c \
@@ -50,7 +49,6 @@ SRC			=	src/main.c \
 				src/parsing/parsing.c \
 				src/parsing/struct3_parse.c \
 				src/parsing/ft_split.c \
-				src/debug.c \
 
 OBJ			=	$(SRC:.c=.o)
 

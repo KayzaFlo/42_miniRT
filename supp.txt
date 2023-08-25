@@ -1,6 +1,0 @@
-{
-    leak printf
-    Memcheck:Leak
-    ...
-    fun:printf
-}
