@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:11:42 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/25 15:10:24 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 15:17:01 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ void	light_interact(mlx_key_data_t key, t_screen *s)
 		if (key.key == MLX_KEY_S)
 			light->coord = v3_sub(light->coord, v3_multf(s->uvw[W], 2));
 		if (key.key == MLX_KEY_A)
-			light->coord = v3_add(light->coord, v3_multf(s->uvw[U], 2));
-		if (key.key == MLX_KEY_D)
 			light->coord = v3_sub(light->coord, v3_multf(s->uvw[U], 2));
+		if (key.key == MLX_KEY_D)
+			light->coord = v3_add(light->coord, v3_multf(s->uvw[U], 2));
 		if (key.key == MLX_KEY_SPACE)
 			light->coord.y += 2;
 		if (key.key == MLX_KEY_LEFT_CONTROL)
