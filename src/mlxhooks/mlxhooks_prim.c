@@ -6,7 +6,7 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:14:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/24 13:08:12 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/25 12:07:04 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,34 @@ static void	sphere_interact(mlx_key_data_t key, t_screen *s, t_sph *sp)
 	}
 }
 
+static void	cylinder_rotate(mlx_key_data_t key, t_cyl *cyl)
+{
+	if (key.key == MLX_KEY_W)
+	{
+		if (fabs(cyl->norm.x) < 1e-2 && fabs(cyl->norm.z) < 1e-2)
+		{
+			if (cyl->norm.y > 0)
+				cyl->norm = v3_rotatearoundaxis(cyl->norm, 
+						v3_cross(v3_new(0, 0, cyl->norm.y), cyl->norm), 15);
+		}
+		else
+			cyl->norm = v3_rotatearoundaxis(cyl->norm, 
+					v3_cross(v3_new(0, 1, 0), cyl->norm), 15);
+	}
+	if (key.key == MLX_KEY_S)
+	{
+		if (fabs(cyl->norm.x) < 1e-2 && fabs(cyl->norm.z) < 1e-2)
+		{
+			if (cyl->norm.y < 0)
+				cyl->norm = v3_rotatearoundaxis(cyl->norm, 
+						v3_cross(v3_new(0, 0, cyl->norm.y), cyl->norm), -15);
+		}
+		else
+			cyl->norm = v3_rotatearoundaxis(cyl->norm, 
+					v3_cross(v3_new(0, 1, 0), cyl->norm), -15);
+	}
+}
+
 static void	cylinder_interact(mlx_key_data_t key, t_screen *s, t_cyl *cyl)
 {
 	if (key.key == MLX_KEY_UP && cyl->dia < INT32_MAX)
@@ -62,6 +90,40 @@ static void	cylinder_interact(mlx_key_data_t key, t_screen *s, t_cyl *cyl)
 			cyl->coord.y += TL_DST;
 		if (key.key == MLX_KEY_LEFT_CONTROL)
 			cyl->coord.y -= TL_DST;
+		return ;
+	}
+	cylinder_rotate(key, cyl);
+	if (key.key == MLX_KEY_A)
+		cyl->norm = v3_roty(cyl->norm, 25);
+	if (key.key == MLX_KEY_D)
+		cyl->norm = v3_roty(cyl->norm, -25);
+}
+
+static void	plan_rotate(mlx_key_data_t key, t_pl *pl)
+{
+	if (key.key == MLX_KEY_W)
+	{
+		if (fabs(pl->ori.x) < 1e-2 && fabs(pl->ori.z) < 1e-2)
+		{
+			if (pl->ori.y > 0)
+				pl->ori = v3_rotatearoundaxis(pl->ori, 
+						v3_cross(v3_new(0, 0, pl->ori.y), pl->ori), 10);
+		}
+		else
+			pl->ori = v3_rotatearoundaxis(pl->ori, 
+					v3_cross(v3_new(0, 1, 0), pl->ori), 10);
+	}
+	if (key.key == MLX_KEY_S)
+	{
+		if (fabs(pl->ori.x) < 1e-2 && fabs(pl->ori.z) < 1e-2)
+		{
+			if (pl->ori.y < 0)
+				pl->ori = v3_rotatearoundaxis(pl->ori, 
+						v3_cross(v3_new(0, 0, pl->ori.y), pl->ori), -10);
+		}
+		else
+			pl->ori = v3_rotatearoundaxis(pl->ori, 
+					v3_cross(v3_new(0, 1, 0), pl->ori), -10);
 	}
 }
 
@@ -81,7 +143,13 @@ static void	plan_interact(mlx_key_data_t key, t_screen *s, t_pl *pl)
 			pl->coord.y += TL_DST;
 		if (key.key == MLX_KEY_LEFT_CONTROL)
 			pl->coord.y -= TL_DST;
+		return ;
 	}
+	plan_rotate(key, pl);
+	if (key.key == MLX_KEY_A)
+		pl->ori = v3_roty(pl->ori, 25);
+	if (key.key == MLX_KEY_D)
+		pl->ori = v3_roty(pl->ori, -25);
 }
 
 void	prim_interact(mlx_key_data_t keydata, t_screen *s)

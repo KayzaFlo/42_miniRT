@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtmath.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
+/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 15:48:26 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 14:25:34 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 11:13:36 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ t_vec3	v3_roty(t_vec3 p, double angle);
 t_vec3	v3_rotz(t_vec3 p, double angle);
 t_vec3	v3_rotate(t_vec3 ref, t_vec3 point, t_vec3 angle);
 t_vec3	v3_localrotate(t_vec3 point, t_vec3 angle);
+t_vec3	v3_rotatearoundaxis(t_vec3 point, t_vec3 axis, double angle);
 
 float	min(float a, float b);
 float	max(float a, float b);
