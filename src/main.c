@@ -6,18 +6,12 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 16:52:12 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 14:32:39 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtrender.h"
 #include "rtparsing.h"
-
-static void	ft_error(void)
-{
-	fprintf(stderr, "%s", mlx_strerror(mlx_errno));
-	exit(EXIT_FAILURE);
-}
 
 t_elem	*elem_init(int argc, char *argv[])
 {
@@ -41,13 +35,13 @@ int	main(int argc, char *argv[])
 	screen.ismovepressed = 0;
 	screen.elem = elem_init(argc, argv);
 	if (!screen.elem)
-		ft_error();
+		exit(EXIT_FAILURE);
 	screen.mlx = mlx_init(WIDTH, HEIGHT, "miniRT", true);
 	if (!screen.mlx)
-		ft_error();
+		exit(EXIT_FAILURE);
 	screen.img = mlx_new_image(screen.mlx, WIDTH, HEIGHT);
 	if (!screen.img || (mlx_image_to_window(screen.mlx, screen.img, 0, 0) < 0))
-		ft_error();
+		exit(EXIT_FAILURE);
 	render(screen.img, screen.elem);
 	mlx_loop_hook(screen.mlx, ft_hook, &screen);
 	handle_hooks(&screen);
