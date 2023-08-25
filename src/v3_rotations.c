@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 15:48:50 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/25 11:10:10 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 11:56:06 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,46 +45,24 @@ t_vec3	v3_rotz(t_vec3 p, double angle)
 	return (new_p);
 }
 
-t_vec3	v3_rotate(t_vec3 ref, t_vec3 point, t_vec3 angle)
-{
-	t_vec3	local_vec;
-
-	local_vec = v3_sub(point, ref);
-	local_vec = v3_rotz(local_vec, angle.z);
-	local_vec = v3_rotx(local_vec, angle.x);
-	local_vec = v3_roty(local_vec, angle.y);
-	return (v3_add(local_vec, ref));
-}
-
-// point
-// angle = [0-360] degrees
-t_vec3	v3_localrotate(t_vec3 point, t_vec3 angle)
-{
-	point = v3_rotz(point, angle.z);
-	point = v3_rotx(point, angle.x);
-	point = v3_roty(point, angle.y);
-	return (point);
-}
-
 // xyz = point
 // abc = point a axis
 // uvw = axis dir
 t_vec3	v3_rotatearoundaxis(t_vec3 point, t_vec3 axis, double angle)
 {
 	const double	theta = angle * M_PI / 180.0f;
+	t_vec3			new_p;
+
 	point = v3_normalize(point);
 	axis = v3_normalize(axis);
-	const double	x = point.x;
-	const double	y = point.y;
-	const double	z = point.z;
-	const double	u = axis.x;
-	const double	v = axis.y;
-	const double	w = axis.z;
-
-	t_vec3	new_p;
-
-	new_p.x = (u * v3_dot(point, axis)) * (1 - cos(theta)) + x * cos(theta) + (-w*y + v*z) * sin(theta);
-	new_p.y = (v * v3_dot(point, axis)) * (1 - cos(theta)) + y * cos(theta) + ( w*x - u*z) * sin(theta);
-	new_p.z = (w * v3_dot(point, axis)) * (1 - cos(theta)) + z * cos(theta) + (-v*x + u*y) * sin(theta);
+	new_p.x = (axis.x * v3_dot(point, axis)) * (1 - cos(theta))
+		+ point.x * cos(theta)
+		+ (-axis.z * point.y + axis.x * point.z) * sin(theta);
+	new_p.y = (axis.y * v3_dot(point, axis)) * (1 - cos(theta))
+		+ point.y * cos(theta)
+		+ (axis.z * point.x - axis.x * point.z) * sin(theta);
+	new_p.z = (axis.z * v3_dot(point, axis)) * (1 - cos(theta))
+		+ point.z * cos(theta)
+		+ (-axis.x * point.x + axis.x * point.y) * sin(theta);
 	return (new_p);
 }
