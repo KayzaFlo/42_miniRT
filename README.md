@@ -3,7 +3,7 @@ miniRT is a 42's project that introduce us to the concept of Raytracing using C 
 
 <p align="center">
   <img src="/scene_atoms.png" width="49%" />
-  <img src="/scene_pillars.gif" width="49%" />
+  <img src="/scene_pillars.png" width="49%" />
 </p>
 
 
