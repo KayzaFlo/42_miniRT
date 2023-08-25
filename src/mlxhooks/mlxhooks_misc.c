@@ -6,12 +6,18 @@
 /*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:16:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/24 14:24:00 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/25 15:40:09 by arivera          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rtrender.h"
 #include "rtparsing.h"
+
+typedef enum e_uvw {
+	U = 0,
+	V,
+	W,
+}			t_uvw;
 
 void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 {
@@ -42,6 +48,29 @@ void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 	s->prim = hit.prim;
 }
 
+void	sphere_interact(mlx_key_data_t key, t_screen *s, t_sph *sp)
+{
+	if (key.key == MLX_KEY_UP && sp->dia < INT32_MAX)
+		sp->dia += 0.25;
+	if (key.key == MLX_KEY_DOWN && sp->dia > 0.25)
+		sp->dia -= 0.25;
+	if (s->interaction == TRANSLATE)
+	{
+		if (key.key == MLX_KEY_W)
+			sp->coord = v3_add(sp->coord, s->uvw[W]);
+		if (key.key == MLX_KEY_S)
+			sp->coord = v3_sub(sp->coord, s->uvw[W]);
+		if (key.key == MLX_KEY_A)
+			sp->coord = v3_sub(sp->coord, s->uvw[U]);
+		if (key.key == MLX_KEY_D)
+			sp->coord = v3_add(sp->coord, s->uvw[U]);
+		if (key.key == MLX_KEY_SPACE)
+			sp->coord.y += TL_DST;
+		if (key.key == MLX_KEY_LEFT_CONTROL)
+			sp->coord.y -= TL_DST;
+	}
+}
+
 int	cam_dir(double cam_ori)
 {
 	if (cam_ori >= 0)
@@ -55,7 +84,8 @@ int	valid_key(mlx_key_data_t key)
 		&& key.key != MLX_KEY_W && key.key != MLX_KEY_A && key.key != MLX_KEY_S
 		&& key.key != MLX_KEY_D && key.key != MLX_KEY_SPACE
 		&& key.key != MLX_KEY_LEFT_CONTROL && key.key != MLX_KEY_UP
-		&& key.key != MLX_KEY_DOWN)
+		&& key.key != MLX_KEY_DOWN && key.key != MLX_KEY_LEFT
+		&& key.key != MLX_KEY_RIGHT)
 		return (0);
 	return (1);
 }
