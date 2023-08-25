@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:14:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/25 13:53:29 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 14:46:13 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,9 @@ void	sphere_interact(mlx_key_data_t key, t_screen *s, t_sph *sp)
 		if (key.key == MLX_KEY_S)
 			sp->coord = v3_sub(sp->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_A)
-			sp->coord = v3_add(sp->coord, s->uvw[U]);
-		if (key.key == MLX_KEY_D)
 			sp->coord = v3_sub(sp->coord, s->uvw[U]);
+		if (key.key == MLX_KEY_D)
+			sp->coord = v3_add(sp->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_SPACE)
 			sp->coord.y += TL_DST;
 		if (key.key == MLX_KEY_LEFT_CONTROL)
@@ -83,9 +83,9 @@ void	cylinder_interact(mlx_key_data_t key, t_screen *s, t_cyl *cyl)
 		if (key.key == MLX_KEY_S)
 			cyl->coord = v3_sub(cyl->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_A)
-			cyl->coord = v3_add(cyl->coord, s->uvw[U]);
-		if (key.key == MLX_KEY_D)
 			cyl->coord = v3_sub(cyl->coord, s->uvw[U]);
+		if (key.key == MLX_KEY_D)
+			cyl->coord = v3_add(cyl->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_SPACE)
 			cyl->coord.y += TL_DST;
 		if (key.key == MLX_KEY_LEFT_CONTROL)
@@ -136,9 +136,9 @@ void	plan_interact(mlx_key_data_t key, t_screen *s, t_pl *pl)
 		if (key.key == MLX_KEY_S)
 			pl->coord = v3_sub(pl->coord, s->uvw[W]);
 		if (key.key == MLX_KEY_A)
-			pl->coord = v3_add(pl->coord, s->uvw[U]);
-		if (key.key == MLX_KEY_D)
 			pl->coord = v3_sub(pl->coord, s->uvw[U]);
+		if (key.key == MLX_KEY_D)
+			pl->coord = v3_add(pl->coord, s->uvw[U]);
 		if (key.key == MLX_KEY_SPACE)
 			pl->coord.y += TL_DST;
 		if (key.key == MLX_KEY_LEFT_CONTROL)

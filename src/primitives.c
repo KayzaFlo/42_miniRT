@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 11:11:18 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 15:53:14 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 14:33:13 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ t_surface	pl_intersect(t_vec3 ro, t_vec3 rd, t_pl *pl)
 		return (surface);
 	}
 	surface.sd = -a / b;
-	surface.n = pl->ori;
+	if (v3_dot(rd, pl->ori) < 0)
+		surface.n = pl->ori;
+	else
+		surface.n = v3_multf(pl->ori, -1);
 	surface.col = pl->col;
 	return (surface);
 }
