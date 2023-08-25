@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 15:48:50 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 14:31:35 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 11:10:10 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,27 @@ t_vec3	v3_localrotate(t_vec3 point, t_vec3 angle)
 	point = v3_rotx(point, angle.x);
 	point = v3_roty(point, angle.y);
 	return (point);
+}
+
+// xyz = point
+// abc = point a axis
+// uvw = axis dir
+t_vec3	v3_rotatearoundaxis(t_vec3 point, t_vec3 axis, double angle)
+{
+	const double	theta = angle * M_PI / 180.0f;
+	point = v3_normalize(point);
+	axis = v3_normalize(axis);
+	const double	x = point.x;
+	const double	y = point.y;
+	const double	z = point.z;
+	const double	u = axis.x;
+	const double	v = axis.y;
+	const double	w = axis.z;
+
+	t_vec3	new_p;
+
+	new_p.x = (u * v3_dot(point, axis)) * (1 - cos(theta)) + x * cos(theta) + (-w*y + v*z) * sin(theta);
+	new_p.y = (v * v3_dot(point, axis)) * (1 - cos(theta)) + y * cos(theta) + ( w*x - u*z) * sin(theta);
+	new_p.z = (w * v3_dot(point, axis)) * (1 - cos(theta)) + z * cos(theta) + (-v*x + u*y) * sin(theta);
+	return (new_p);
 }
