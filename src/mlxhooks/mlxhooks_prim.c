@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:14:39 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/25 14:46:13 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 15:27:25 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,25 +48,25 @@ static void	cylinder_rotate(mlx_key_data_t key, t_cyl *cyl)
 	{
 		if (fabs(cyl->norm.x) < 1e-2 && fabs(cyl->norm.z) < 1e-2)
 		{
-			if (cyl->norm.y > 0)
-				cyl->norm = v3_rotatearoundaxis(cyl->norm, 
-						v3_cross(v3_new(0, 0, cyl->norm.y), cyl->norm), 15);
-		}
-		else
-			cyl->norm = v3_rotatearoundaxis(cyl->norm, 
-					v3_cross(v3_new(0, 1, 0), cyl->norm), 15);
-	}
-	if (key.key == MLX_KEY_S)
-	{
-		if (fabs(cyl->norm.x) < 1e-2 && fabs(cyl->norm.z) < 1e-2)
-		{
-			if (cyl->norm.y < 0)
+			if (cyl->norm.y > -1e-2)
 				cyl->norm = v3_rotatearoundaxis(cyl->norm, 
 						v3_cross(v3_new(0, 0, cyl->norm.y), cyl->norm), -15);
 		}
 		else
 			cyl->norm = v3_rotatearoundaxis(cyl->norm, 
 					v3_cross(v3_new(0, 1, 0), cyl->norm), -15);
+	}
+	if (key.key == MLX_KEY_S)
+	{
+		if (fabs(cyl->norm.x) < 1e-2 && fabs(cyl->norm.z) < 1e-2)
+		{
+			if (cyl->norm.y < 1e-2)
+				cyl->norm = v3_rotatearoundaxis(cyl->norm, 
+						v3_cross(v3_new(0, 0, cyl->norm.y), cyl->norm), 15);
+		}
+		else
+			cyl->norm = v3_rotatearoundaxis(cyl->norm, 
+					v3_cross(v3_new(0, 1, 0), cyl->norm), 15);
 	}
 }
 
@@ -105,25 +105,25 @@ static void	plan_rotate(mlx_key_data_t key, t_pl *pl)
 	{
 		if (fabs(pl->ori.x) < 1e-2 && fabs(pl->ori.z) < 1e-2)
 		{
-			if (pl->ori.y > 0)
-				pl->ori = v3_rotatearoundaxis(pl->ori, 
-						v3_cross(v3_new(0, 0, pl->ori.y), pl->ori), 10);
-		}
-		else
-			pl->ori = v3_rotatearoundaxis(pl->ori, 
-					v3_cross(v3_new(0, 1, 0), pl->ori), 10);
-	}
-	if (key.key == MLX_KEY_S)
-	{
-		if (fabs(pl->ori.x) < 1e-2 && fabs(pl->ori.z) < 1e-2)
-		{
-			if (pl->ori.y < 0)
+			if (pl->ori.y > -1e-2)
 				pl->ori = v3_rotatearoundaxis(pl->ori, 
 						v3_cross(v3_new(0, 0, pl->ori.y), pl->ori), -10);
 		}
 		else
 			pl->ori = v3_rotatearoundaxis(pl->ori, 
 					v3_cross(v3_new(0, 1, 0), pl->ori), -10);
+	}
+	if (key.key == MLX_KEY_S)
+	{
+		if (fabs(pl->ori.x) < 1e-2 && fabs(pl->ori.z) < 1e-2)
+		{
+			if (pl->ori.y < 1e-2)
+				pl->ori = v3_rotatearoundaxis(pl->ori, 
+						v3_cross(v3_new(0, 0, pl->ori.y), pl->ori), 10);
+		}
+		else
+			pl->ori = v3_rotatearoundaxis(pl->ori, 
+					v3_cross(v3_new(0, 1, 0), pl->ori), 10);
 	}
 }
 
