@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: arivera <marvin@42quebec.com>              +#+  +:+       +#+         #
+#    By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/31 13:26:56 by fgeslin           #+#    #+#              #
-#    Updated: 2023/08/24 10:59:46 by arivera          ###   ########.fr        #
+#    Updated: 2023/08/25 13:54:14 by fgeslin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ PARS_DIR	:= src/parsing/
 #####	SOURCES		############################################################
 SRC			=	src/main.c \
 				src/rendering.c \
+				src/lighting.c \
 				src/renderingthread.c \
 				src/color.c \
 				src/mathplus.c \
@@ -36,6 +37,7 @@ SRC			=	src/main.c \
 				src/mlxhooks/mlxhooks_camlight.c \
 				src/mlxhooks/mlxhooks_misc.c \
 				src/mlxhooks/mlxhooks_prim.c \
+				src/mlxhooks/mlxhooks_interact.c \
 				src/parsing/assign_values.c \
 				src/parsing/file_parsing.c \
 				src/parsing/free_parsing.c \
@@ -73,7 +75,7 @@ all: $(LIBFT) $(MLX42) $(MINIRT) $(CLIENT)
 
 $(MINIRT): $(OBJ)
 	@ echo "$(GREEN)Compilation ${WHITE}of ${CYAN}$(MINIRT) ${WHITE}..."
-	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -lglfw -L"/Users/$(USER)/homebrew/opt/glfw/lib/"
+	@ $(CC) -o $(MINIRT) $(OBJ) $(MLX42) $(LIBFT) -lglfw -L"/Users/$(USER)/.brew/opt/glfw/lib/"
 	@ echo "$(CYAN)$(MINIRT) $(GREEN)created$(WHITE) ✔️"
 
 # ------ #

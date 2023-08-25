@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/25 13:24:46 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 13:54:24 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ void		light_interact(mlx_key_data_t keydata, t_screen *s);
 void		ft_get_selection(t_screen *s, int32_t x, int32_t y);
 void		ft_hook(void *param);
 void		prim_interact(mlx_key_data_t keydata, t_screen *s);
+void		sphere_interact(mlx_key_data_t key, t_screen *s, t_sph *sp);
+void		cylinder_interact(mlx_key_data_t key, t_screen *s, t_cyl *cyl);
+void		plan_interact(mlx_key_data_t key, t_screen *s, t_pl *pl);
 
 void		render(mlx_image_t *img, t_elem *elem);
 void		renderthreaded(mlx_image_t *img, t_elem *elem);
