@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/22 13:15:42 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 13:32:01 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,28 @@ typedef struct	s_pixel
 
 void	*routine(void *param)
 {
-	int		x;
-	int		y;
-	t_pixel	*pix;
-	t_vec3	c;
-	t_vec3	rd;
+	t_vec3		screen;
+	t_vec3		c;
+	t_vec3		rd;
+	t_vec3		*data;
+	t_surface	hit;
+	t_pixel		*pix;
 
 	pix = (t_pixel *)param;
-	y = pix->id;
-	const float	rfov = pix->elem->cam.fov * M_PI / 180.0f;
-	while (y < HEIGHT - 1)
+	data = get_viewport(pix->elem, pix->elem->cam.fov * M_PI / 180.0f);
+	screen.y = -1;
+	while (screen.y++ < HEIGHT - 1)
 	{
-		x = -1;
-		while (x++ < WIDTH - 1)
+		printf("\e[1;36m\r%05.1f%%\e[0m", (float)screen.y / (HEIGHT - 1) * 100.0f);
+		screen.x = -1;
+		while (screen.x++ < WIDTH - 1)
 		{
-			rd.x = tan(((x - WIDTH / 2) / (float)WIDTH) * rfov);
-			rd.y = tan(((y - HEIGHT / 2) * -1 / (float)WIDTH) * rfov);
-			rd.z = 1;
-			rd = v3_normalize(rd);
-			c = pixelcompute(pix->elem->cam.coord, rd, pix->elem);
+			rd = get_rd(data, screen.x, screen.y, pix->elem);
+			hit = prim_intersect(pix->elem->cam.coord, rd, pix->elem->prim_list);
+			if (hit.sd < 1000)
+				c = get_light(pix->elem->cam.coord, rd, pix->elem, hit);
+			else
+				c = v3_multf(pix->elem->amb.col, pix->elem->amb.ratio);
 			// ## Anti Alisasing TEST ##
 			// c = v3_add(c, pixelcompute(x - 0.3, y - 0.3, pix->elem));
 			// c = v3_add(c, pixelcompute(x - 0.3, y + 0.3, pix->elem));
@@ -52,9 +55,9 @@ void	*routine(void *param)
 			// c = v3_add(c, pixelcompute(x + 0.3, y + 0.3, pix->elem));
 			// c = v3_multf(c, 0.2);
 			// ##                     ##
-			mlx_put_pixel(pix->img, x, y, hexcol(c.x * 255, c.y * 255, c.z * 255, 255));
+			mlx_put_pixel(pix->img, screen.x, screen.y, hexcol(c.x * 255, c.y * 255, c.z * 255, 255));
 		}
-		y += T_COUNT;
+		screen.y += T_COUNT;
 	}
 	pthread_exit(NULL);
 }

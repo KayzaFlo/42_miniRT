@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/24 16:50:59 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/25 13:47:12 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,35 +50,6 @@ t_surface	prim_intersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 	return (nearest_surface);
 }
 
-// Diffuse light
-// Hard Shadow
-// Ambient light
-t_vec3	pixelcompute(t_vec3 ro, t_vec3 rd, t_elem *elem)
-{
-	const t_lit		*light = (t_lit *)(elem->lit->content);
-	t_vec3			light_dir;
-	t_surface		hit;
-	t_vec3			hitpoint;
-	float			shading;
-
-	hit = prim_intersect(ro, rd, elem->prim_list);
-	hitpoint = v3_add(ro, v3_multf(rd, hit.sd));
-	light_dir = v3_normalize(v3_sub(light->coord, hitpoint));
-	if (hit.sd < 1000)
-	{
-		shading = max(v3_dot(hit.n, light_dir), elem->amb.ratio);
-		if (prim_intersect(hitpoint, light_dir, elem->prim_list).sd
-			< v3_length(v3_sub(hitpoint, light->coord)) + 1e-3
-			&& shading > elem->amb.ratio)
-			shading = elem->amb.ratio;
-		return (v3_add(
-				v3_multf(hit.col, shading),
-				v3_multf(elem->amb.col, elem->amb.ratio)
-			));
-	}
-	return (v3_multf(elem->amb.col, elem->amb.ratio));
-}
-
 // uvw => Referencial -rd
 // viewport_uv => viewport size
 t_vec3	*get_viewport(t_elem *elem, float theta)
@@ -95,7 +66,7 @@ t_vec3	*get_viewport(t_elem *elem, float theta)
 	if (!elem->cam.ori.x && !elem->cam.ori.z)
 		uvw[U] = v3_normalize(v3_cross(v3_new(0, 0, elem->cam.ori.y), uvw[W]));
 	uvw[V] = v3_cross(uvw[W], uvw[U]);
-	viewport_uv[U] = v3_multf(uvw[U], 2 * tan(theta / 2) * ratio);
+	viewport_uv[U] = v3_multf(uvw[U], -2 * tan(theta / 2) * ratio);
 	viewport_uv[V] = v3_multf(uvw[V], -2 * tan(theta / 2));
 	data[PIXDELTA_U] = v3_multf(viewport_uv[U], 1.0 / (double)WIDTH);
 	data[PIXDELTA_V] = v3_multf(viewport_uv[V], 1.0 / (double)HEIGHT);
@@ -121,22 +92,27 @@ t_vec3	get_rd(t_vec3 *data, int x, int y, t_elem *elem)
 
 void	render(mlx_image_t *img, t_elem *elem)
 {
-	int		x;
-	int		y;
-	t_vec3	c;
-	t_vec3	*data;
+	t_vec3		screen;
+	t_vec3		c;
+	t_vec3		rd;
+	t_vec3		*data;
+	t_surface	hit;
 
 	data = get_viewport(elem, elem->cam.fov * M_PI / 180.0f);
-	y = -1;
-	while (y++ < HEIGHT - 1)
+	screen.y = -1;
+	while (screen.y++ < HEIGHT - 1)
 	{
-		printf("\e[1;36m\r%05.1f%%\e[0m", (float)y / (HEIGHT - 1) * 100.0f);
-		fflush(stdout);
-		x = -1;
-		while (x++ < WIDTH - 1)
+		printf("\e[1;36m\r%05.1f%%\e[0m", (float)screen.y / (HEIGHT - 1) * 100.0f);
+		screen.x = -1;
+		while (screen.x++ < WIDTH - 1)
 		{
-			c = pixelcompute(elem->cam.coord, get_rd(data, x, y, elem), elem);
-			mlx_put_pixel(img, x, y, hexcol(c.x, c.y, c.z, 255));
+			rd = get_rd(data, screen.x, screen.y, elem);
+			hit = prim_intersect(elem->cam.coord, rd, elem->prim_list);
+			if (hit.sd < 1000)
+				c = get_light(elem->cam.coord, rd, elem, hit);
+			else
+				c = v3_multf(elem->amb.col, elem->amb.ratio);
+			mlx_put_pixel(img, screen.x, screen.y, hexcol(c.x, c.y, c.z, 255));
 		}
 	}
 	free(data);
