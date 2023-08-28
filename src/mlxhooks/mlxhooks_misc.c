@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mlxhooks_misc.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arivera <marvin@42quebec.com>              +#+  +:+       +#+        */
+/*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/22 13:16:47 by arivera           #+#    #+#             */
-/*   Updated: 2023/08/25 15:40:09 by arivera          ###   ########.fr       */
+/*   Updated: 2023/08/28 12:14:01 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,15 @@ void	ft_get_selection(t_screen *s, int32_t x, int32_t y)
 	t_surface	hit;
 	t_vec3		*data;
 
-	data = get_viewport(s->elem, s->elem->cam.fov * M_PI / 180.0f);
+	data = get_viewport(s->elem, s->elem->cam.fov * M_PI / 180.0f, s->img);
 	ro = s->elem->cam.coord;
 	rd = get_rd(data, x, y, s->elem);
 	free(data);
 	s->selected = 0;
 	s->prim = 0;
-	if (x > 5 && x < 90 && y > HEIGHT - 25)
+	if (x > 5 && x < 90 && y > (int)s->img->height - 25)
 		return (s->selected = T_CAM, ft_putstr_fd("Camera selected\n", 1));
-	if (x > 5 && x < 70 && y > HEIGHT - 50)
+	if (x > 5 && x < 70 && y > (int)s->img->height - 50)
 		return (s->selected = T_LIGHT, ft_putstr_fd("Light selected\n", 1));
 	hit = prim_intersect(ro, rd, s->elem->prim_list);
 	if (hit.sd >= 1000)

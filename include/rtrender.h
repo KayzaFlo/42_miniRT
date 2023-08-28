@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:42 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/25 13:54:24 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/28 12:09:21 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_screen
 }				t_screen;
 
 t_vec3		get_rd(t_vec3 *data, int x, int y, t_elem *elem);
-t_vec3		*get_viewport(t_elem *elem, float theta);
+t_vec3		*get_viewport(t_elem *elem, float theta, mlx_image_t *img);
 
 int			cam_dir(double cam_ori);
 void		ft_hook(void *param);
@@ -62,7 +62,6 @@ void		cylinder_interact(mlx_key_data_t key, t_screen *s, t_cyl *cyl);
 void		plan_interact(mlx_key_data_t key, t_screen *s, t_pl *pl);
 
 void		render(mlx_image_t *img, t_elem *elem);
-void		renderthreaded(mlx_image_t *img, t_elem *elem);
 t_vec3		get_light(t_vec3 ro, t_vec3 rd, t_elem *elem, t_surface hit);
 t_surface	prim_intersect(t_vec3 ro, t_vec3 rd, t_list *prim_list);
 
