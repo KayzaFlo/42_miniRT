@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/08 12:16:33 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/25 13:47:12 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/28 12:13:44 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ t_surface	prim_intersect(t_vec3 ro, t_vec3 rd, t_list *prim_list)
 
 // uvw => Referencial -rd
 // viewport_uv => viewport size
-t_vec3	*get_viewport(t_elem *elem, float theta)
+t_vec3	*get_viewport(t_elem *elem, float theta, mlx_image_t *img)
 {
-	const float	ratio = (double)WIDTH / (double)HEIGHT;
+	const float	ratio = (double)img->width / (double)img->height;
 	t_vec3		*data;
 	t_vec3		uvw[3];
 	t_vec3		viewport_uv[2];
@@ -68,8 +68,8 @@ t_vec3	*get_viewport(t_elem *elem, float theta)
 	uvw[V] = v3_cross(uvw[W], uvw[U]);
 	viewport_uv[U] = v3_multf(uvw[U], -2 * tan(theta / 2) * ratio);
 	viewport_uv[V] = v3_multf(uvw[V], -2 * tan(theta / 2));
-	data[PIXDELTA_U] = v3_multf(viewport_uv[U], 1.0 / (double)WIDTH);
-	data[PIXDELTA_V] = v3_multf(viewport_uv[V], 1.0 / (double)HEIGHT);
+	data[PIXDELTA_U] = v3_multf(viewport_uv[U], 1.0 / (double)img->width);
+	data[PIXDELTA_V] = v3_multf(viewport_uv[V], 1.0 / (double)img->height);
 	viewport_upperleft = v3_sub(
 			v3_sub(elem->cam.coord, v3_multf(uvw[W], 1)),
 			v3_add(v3_multf(viewport_uv[U], 0.5f),
@@ -98,13 +98,13 @@ void	render(mlx_image_t *img, t_elem *elem)
 	t_vec3		*data;
 	t_surface	hit;
 
-	data = get_viewport(elem, elem->cam.fov * M_PI / 180.0f);
+	data = get_viewport(elem, elem->cam.fov * M_PI / 180.0f, img);
 	screen.y = -1;
-	while (screen.y++ < HEIGHT - 1)
+	while (screen.y++ < img->height - 1)
 	{
-		printf("\e[1;36m\r%05.1f%%\e[0m", (float)screen.y / (HEIGHT - 1) * 100.0f);
+		printf("\e[1;36m\r%05.1f%%\e[0m", screen.y / (img->height - 1) * 100.0f);
 		screen.x = -1;
-		while (screen.x++ < WIDTH - 1)
+		while (screen.x++ < img->width - 1)
 		{
 			rd = get_rd(data, screen.x, screen.y, elem);
 			hit = prim_intersect(elem->cam.coord, rd, elem->prim_list);

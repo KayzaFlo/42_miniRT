@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 17:03:06 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/01/03 14:32:13 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/28 12:16:31 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*ft_flagarg(char c, void *ptr, t_flaggrp *flaggrp)
 		else
 			str = ft_printfun(c, ptr, flaggrp->dot_size, sign);
 		if (!flaggrp->dot_size && !*(int *)ptr && ft_strchr("iduxX", c))
-				str[ft_isprint(sign)] = 0;
+			str[ft_isprint(sign)] = 0;
 		return (str);
 	}
 	else if (ft_flagcmp(flaggrp, flag_Zero))

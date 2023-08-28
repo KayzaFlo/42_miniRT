@@ -6,7 +6,7 @@
 /*   By: fgeslin <fgeslin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 11:53:46 by fgeslin           #+#    #+#             */
-/*   Updated: 2023/08/25 14:32:39 by fgeslin          ###   ########.fr       */
+/*   Updated: 2023/08/28 12:12:28 by fgeslin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,18 @@ t_elem	*elem_init(int argc, char *argv[])
 	return (elem);
 }
 
+void	ft_resize(int width, int height, void *param)
+{
+	t_screen	*screen;
+
+	screen = (t_screen *)param;
+	screen->img = mlx_new_image(screen->mlx, width, height);
+	mlx_image_to_window(screen->mlx, screen->img, 0, 0);
+	mlx_put_string(screen->mlx, "CAMERA", 10, height - 25);
+	mlx_put_string(screen->mlx, "LIGHT", 10, height - 50);
+	render(screen->img, screen->elem);
+}
+
 int	main(int argc, char *argv[])
 {
 	t_screen	screen;
@@ -44,6 +56,7 @@ int	main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	render(screen.img, screen.elem);
 	mlx_loop_hook(screen.mlx, ft_hook, &screen);
+	mlx_resize_hook(screen.mlx, ft_resize, &screen);
 	handle_hooks(&screen);
 	mlx_put_string(screen.mlx, "CAMERA", 10, HEIGHT - 25);
 	mlx_put_string(screen.mlx, "LIGHT", 10, HEIGHT - 50);
